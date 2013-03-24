@@ -7,11 +7,12 @@
    <datasource jndi-name="java:jboss/datasources/houtMySqlDatabase" enabled="true" use-java-context="true"  
          pool-name="MySQLDS">  
      <connection-url>jdbc:mysql://${env.OPENSHIFT_MYSQL_DB_HOST}:${env.OPENSHIFT_MYSQL_DB_PORT}/hout</connection-url> 
-     <driver>mysql-5-driver</driver>  
+     <driver>com.mysql.jdbc.Driver</driver>  
      <security>  
        <user-name>adminLEmlLcS</user-name>  
        <password>xbPyxdIYLnYe</password>  
      </security>  
    </datasource>  
- </datasources>
+ </datasources>  
+
  
