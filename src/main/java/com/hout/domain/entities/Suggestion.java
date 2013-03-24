@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,10 +28,13 @@ public class Suggestion implements Serializable {
 
     Date date;
 
+    @ElementCollection
     List<Long> acceptedUserIds;
-    
+
+    @ElementCollection
     List<Long> undecidedUserIds;
 
+    @ElementCollection
     List<Long> rejectedUserIds;
 
     public Suggestion(User suggestedUser, String location, Date date) {

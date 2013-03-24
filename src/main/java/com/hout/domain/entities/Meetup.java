@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,12 +30,16 @@ public class Meetup implements Serializable {
 
     Date finalizedDate;
 
+    @ElementCollection
     List<Suggestion> suggestions;
     
+    @ElementCollection
     List<Long> inviteeIds;
 
+    @ElementCollection
     Map<Long, Status> inviteeStatus;
 
+    @ElementCollection
     List<String> pictureLocations;
 
     @NotNull

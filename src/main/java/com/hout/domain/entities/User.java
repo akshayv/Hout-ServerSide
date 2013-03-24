@@ -4,6 +4,7 @@ package com.hout.domain.entities;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,10 +28,13 @@ public class User implements Serializable {
 
     String profilePictureLocation;
 
+    @ElementCollection
     List<Long> contactIds;
 
+    @ElementCollection
     List<Meetup> currentMeetupIds;
 
+    @ElementCollection
     List<Meetup> pastMeetupIds;
 
     long contactNumber;
