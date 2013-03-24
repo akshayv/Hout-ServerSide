@@ -20,6 +20,7 @@ import com.hout.client.ClientApi;
  * This class produces a RESTful service to read the contents of the members table.
  */
 @RequestScoped
+@Path("/members")
 public class MemberResourceRESTService {
    @Inject
    private EntityManager em;
@@ -28,7 +29,6 @@ public class MemberResourceRESTService {
    private ClientApi clientApi;
 
    @GET
-   @Path("/members")
    @Produces("text/xml")
    public List<Member> listAllMembers() {
       // Use @SupressWarnings to force IDE to ignore warnings about "genericizing" the results of
