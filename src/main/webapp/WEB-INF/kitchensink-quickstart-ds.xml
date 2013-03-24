@@ -7,8 +7,8 @@
                 <connection-url>jdbc:mysql://127.8.182.1:3306/hout</connection-url>
                 <driver>mysql</driver>
                 <security>
-                  <user-name>${env.OPENSHIFT_DB_USERNAME}</user-name>
-                  <password>${env.OPENSHIFT_DB_PASSWORD}</password>
+                  <user-name>adminLEmlLcS</user-name>
+                  <password>xbPyxdIYLnYe</password>
                 </security>
                 <validation>
                   <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
