@@ -13,11 +13,11 @@ public class VenueServiceImpl implements VenueService {
 	
 	@Override
 	public Venue createNew(String location) {
-		Venue venue = new Venue(location);
 		Venue existingVenue = venueDao.findByLocation(location);
 		if(existingVenue  != null) {
 			return existingVenue;
 		}
+		Venue venue = new Venue(location);
 		venueDao.save(venue);
 		return venue;
 	}
