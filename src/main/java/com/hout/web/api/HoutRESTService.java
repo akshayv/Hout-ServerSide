@@ -2,11 +2,9 @@ package com.hout.web.api;
 
 
 import java.util.Date;
-import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -14,7 +12,6 @@ import javax.ws.rs.QueryParam;
 
 
 import com.hout.client.ClientApi;
-import com.hout.web.api.marshaller.DateFormat;
 
 /**
  * JAX-RS Example
@@ -40,7 +37,7 @@ public class HoutRESTService {
    @Produces("text/plain")
    public String createMeetup(@QueryParam("description") String description, 
 		   @QueryParam("suggestedLocation") String suggestedLocation,
-		   @QueryParam("suggestedDate") @DateFormat("yyyy-MM-dd HH:mm:ss z") Date suggestedDate, 
+		   @QueryParam("suggestedDate")  Date suggestedDate, 
 		   @QueryParam("isFacebookSharing") boolean isFacebookSharing,
 		   @QueryParam("isTwitterSharing") boolean isTwitterSharing, 
 		   @QueryParam("isSuggestionsAllowed") boolean isSuggestionsAllowed) {
