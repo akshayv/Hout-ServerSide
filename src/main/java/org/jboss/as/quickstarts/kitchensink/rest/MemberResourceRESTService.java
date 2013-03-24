@@ -39,8 +39,8 @@ public class MemberResourceRESTService {
       // the @Entity class
       // as described in the named query blueprint:
       // https://blueprints.dev.java.net/bpcatalog/ee5/persistence/namedquery.html
-      clientApi.createNewUser(name, profilePictureLocation, null);
       final List<Member> results = em.createQuery("select m from Member m order by m.name").getResultList();
+      clientApi.createNewUser("123", "123", null);
       return results;
    }
 
