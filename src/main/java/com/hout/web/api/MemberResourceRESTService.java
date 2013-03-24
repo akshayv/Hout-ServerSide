@@ -1,4 +1,4 @@
-package org.jboss.as.quickstarts.kitchensink.rest;
+package com.hout.web.api;
 
 import java.util.List;
 
@@ -46,8 +46,8 @@ public class MemberResourceRESTService {
    @GET
    @Path("/createEvent")
    @Produces("text/xml")
-   public Boolean createEvent(@QueryParam("name") String name, @QueryParam("location") String profilePictureLocation) {
+   public String createEvent(@QueryParam("name") String name, @QueryParam("location") String profilePictureLocation) {
 	   clientApi.createNewUser(name, profilePictureLocation, null);
-	   return true;
+	   return "true";
    }
 }
