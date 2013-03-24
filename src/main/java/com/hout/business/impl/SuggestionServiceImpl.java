@@ -19,9 +19,12 @@ public class SuggestionServiceImpl implements SuggestionService {
 
 	@Override
 	public Suggestion createNew(User user, String location, Date date) {
-		if(!location.trim().equals("") && date!=null)
-			return new Suggestion(user, location, date);
-		return null;
+		Suggestion suggestion = null;
+		if(!location.trim().equals("") && date!=null) {
+			suggestion =new Suggestion(user, location, date); 
+			suggestionDao.save(suggestion);
+			}
+		return suggestion;
 	}
 
 	@Override

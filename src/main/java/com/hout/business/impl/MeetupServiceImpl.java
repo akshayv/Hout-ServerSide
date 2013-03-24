@@ -52,6 +52,7 @@ public class MeetupServiceImpl implements MeetupService {
 		if(suggestion != null) {
 			meetup.addSuggestions(suggestion);
 		}
+		addNew(meetup);
 		notificationService.notify(meetup, "New meetup has been created");
 	}
 
@@ -106,6 +107,11 @@ public class MeetupServiceImpl implements MeetupService {
 		}
 		Suggestion suggestion = new Suggestion(user,location, date);
 		suggestions.add(suggestion);
+	}
+
+	@Override
+	public void addNew(Meetup meetup) {
+		meetupDao.save(meetup);
 	}
 	
 }
