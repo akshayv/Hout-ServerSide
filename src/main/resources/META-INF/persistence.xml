@@ -10,6 +10,10 @@
       <!-- The datasource is deployed as WEB-INF/kitchensink-quickstart-ds.xml, you
          can find it in the source at src/main/webapp/WEB-INF/kitchensink-quickstart-ds.xml -->
       <jta-data-source>java:jboss/datasources/KitchensinkQuickstartDS</jta-data-source>
+      <class>com.hout.domain.entities.Meetup</class>
+      <class>com.hout.domain.entities.Suggestion</class>
+      <class>com.hout.domain.entities.User</class>
+      <class>com.hout.domain.entities.Venue</class>
       <properties>
          <!-- Properties for Hibernate -->
          <property name="hibernate.hbm2ddl.auto" value="create-drop" />
