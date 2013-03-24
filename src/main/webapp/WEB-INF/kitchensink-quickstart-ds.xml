@@ -4,19 +4,19 @@
    AS. -->
    <datasources>
          <datasource jndi-name="java:jboss/datasources/houtMySqlDatabase" enabled="true" use-java-context="true" pool-name="houtMySqlDatabase" use-ccm="true">
-                <connection-url>mysql://${env.OPENSHIFT_DB_HOST}:${env.OPENSHIFT_DB_PORT}/${env.OPENSHIFT_APP_NAME}</connection-url>
-                <driver>mysql</driver>
+                <connection-url>jdbc:postgresql://${env.OPENSHIFT_DB_HOST}:${env.OPENSHIFT_DB_PORT}/${env.OPENSHIFT_APP_NAME}</connection-url>
+                <driver>postgresql</driver>
                 <security>
-                  <user-name>${env.OPENSHIFT_DB_USERNAME}</user-name>
-                  <password>${env.OPENSHIFT_DB_PASSWORD}</password>
+                  <user-name>admin</user-name>
+                  <password>faitKZKad5ed</password>
                 </security>
                 <validation>
                   <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
                 </validation>
             </datasource>
             <drivers>
-                <driver name="mysql" module="com.mysql.jdbc">
-                    <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>
-                </driver>
+                <driver name="postgresql" module="org.postgresql">
+ 				<xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
+ 				</driver>
             </drivers>
         </datasources> 
