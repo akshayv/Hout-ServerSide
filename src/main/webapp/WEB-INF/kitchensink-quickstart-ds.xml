@@ -2,13 +2,16 @@
 <!-- This is an unmanaged datasource. It should be used for proofs of concept 
    or testing only. It uses H2, an in memory database that ships with JBoss 
    AS. -->
-<datasources> 
-    <local-tx-datasource> 
-        <jndi-name>houtMySqlDatabase</jndi-name> 
-        <connection-url>jdbc:mysql://${env.OPENSHIFT_MYSQL_DB_HOST}:${env.OPENSHIFT_MYSQL_DB_PORT}/hout</connection-url> 
-        <driver-class>com.mysql.jdbc.Driver</driver-class> 
-        <user-name>adminLEmlLcS</user-name> 
-        <password>xbPyxdIYLnYe</password> 
-    </local-tx-datasource> 
-</datasources> 
+   
+ <datasources>  
+   <datasource jndi-name="java:jboss/datasources/houtMySqlDatabase" enabled="true" use-java-context="true"  
+         pool-name="MySQLDS">  
+     <connection-url>jdbc:mysql://${env.OPENSHIFT_MYSQL_DB_HOST}:${env.OPENSHIFT_MYSQL_DB_PORT}/hout</connection-url> 
+     <driver>mysql-5-driver</driver>  
+     <security>  
+       <user-name>adminLEmlLcS</user-name>  
+       <password>xbPyxdIYLnYe</password>  
+     </security>  
+   </datasource>  
+ </datasources>
  
