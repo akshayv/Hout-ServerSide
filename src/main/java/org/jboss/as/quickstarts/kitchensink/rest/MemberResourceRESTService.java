@@ -9,8 +9,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 import org.jboss.as.quickstarts.kitchensink.model.Member;
+
+import com.hout.client.ClientApi;
 
 /**
  * JAX-RS Example
@@ -22,6 +25,9 @@ import org.jboss.as.quickstarts.kitchensink.model.Member;
 public class MemberResourceRESTService {
    @Inject
    private EntityManager em;
+   
+   @Inject
+   private ClientApi clientApi;
 
    @GET
    @Produces("text/xml")
@@ -42,5 +48,13 @@ public class MemberResourceRESTService {
    @Produces("text/xml")
    public Member lookupMemberById(@PathParam("id") long id) {
       return em.find(Member.class, id);
+   }
+   
+   @GET
+   @Path("/createEvent")
+   @Produces("text/xml")
+   public Boolean createEvent(@QueryParam("name") String name, @QueryParam("location") String profilePictureLocation) {
+	   clientApi.createNewUser(name, profilePictureLocation, null);
+	   return true;
    }
 }
