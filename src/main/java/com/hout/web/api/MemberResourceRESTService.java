@@ -1,4 +1,4 @@
-package org.jboss.as.quickstarts.kitchensink.rest;
+package com.hout.web.api;
 
 import java.util.List;
 
@@ -19,7 +19,6 @@ import com.hout.client.ClientApi;
  * 
  * This class produces a RESTful service to read the contents of the members table.
  */
-@Path("/members")
 @RequestScoped
 public class MemberResourceRESTService {
    @Inject
@@ -30,6 +29,7 @@ public class MemberResourceRESTService {
 
    @GET
    @Produces("text/xml")
+   @Path("/members")
    public List<Member> listAllMembers() {
       // Use @SupressWarnings to force IDE to ignore warnings about "genericizing" the results of
       // this query
@@ -46,8 +46,8 @@ public class MemberResourceRESTService {
    @GET
    @Path("/createEvent")
    @Produces("text/xml")
-   public Boolean createEvent(@QueryParam("name") String name, @QueryParam("location") String profilePictureLocation) {
+   public String createEvent(@QueryParam("name") String name, @QueryParam("location") String profilePictureLocation) {
 	   clientApi.createNewUser(name, profilePictureLocation, null);
-	   return true;
+	   return "true";
    }
 }
