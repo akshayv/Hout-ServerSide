@@ -1,6 +1,5 @@
 package com.hout.domain.entities;
 
-
 import java.io.Serializable;
 import java.util.List;
 

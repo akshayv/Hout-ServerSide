@@ -17,7 +17,8 @@ public class VenueServiceImpl implements VenueService {
 		if(existingVenue  != null) {
 			return existingVenue;
 		}
-		Venue venue = new Venue(location);
+		Venue venue = new Venue();
+		venue.setLocation(location);
 		venueDao.save(venue);
 		return venue;
 	}
