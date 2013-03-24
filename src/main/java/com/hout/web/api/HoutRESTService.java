@@ -1,7 +1,9 @@
 package com.hout.web.api;
 
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -42,8 +44,9 @@ public class HoutRESTService {
 		   @QueryParam("isTwitterSharing") boolean isTwitterSharing, 
 		   @QueryParam("isSuggestionsAllowed") boolean isSuggestionsAllowed) {
 		
+	   List<Long>  contactIds= new ArrayList<Long>();
 	   clientApi.createNewMeetup(description, suggestedLocation,
-			   suggestedDate, null, isFacebookSharing,
+			   suggestedDate, contactIds, isFacebookSharing,
 			   isTwitterSharing, isSuggestionsAllowed);
 	   return "success";
    }
