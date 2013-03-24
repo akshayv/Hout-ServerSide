@@ -19,7 +19,7 @@ public class Venue implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	Long id;
+	long id;
 
     String location;
     
