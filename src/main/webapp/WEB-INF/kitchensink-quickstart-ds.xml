@@ -4,7 +4,7 @@
    AS. -->
    <datasources>
          <datasource jndi-name="java:jboss/datasources/houtMySqlDatabase" enabled="true" use-java-context="true" pool-name="houtMySqlDatabase" use-ccm="true">
-                <connection-url>jdbc:postgresql://${env.OPENSHIFT_DB_HOST}:${env.OPENSHIFT_DB_PORT}/${env.OPENSHIFT_APP_NAME}</connection-url>
+                <connection-url>jdbc:postgresql://${env.OPENSHIFT_POSTGRESQL_DB_HOST}:${env.OPENSHIFT_POSTGRESQL_DB_PORT}/${env.OPENSHIFT_APP_NAME}</connection-url>
                 <driver>postgresql</driver>
                 <security>
                   <user-name>admin</user-name>
