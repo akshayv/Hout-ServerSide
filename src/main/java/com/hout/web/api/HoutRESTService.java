@@ -1,6 +1,9 @@
 package com.hout.web.api;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,14 +42,16 @@ public class HoutRESTService {
    @Produces("text/plain")
    public String createMeetup(@QueryParam("description") String description, 
 		   @QueryParam("suggestedLocation") String suggestedLocation,
-		   @QueryParam("suggestedDate")  Date suggestedDate, 
+		   @QueryParam("suggestedDate")  String suggestedDate, 
 		   @QueryParam("isFacebookSharing") boolean isFacebookSharing,
 		   @QueryParam("isTwitterSharing") boolean isTwitterSharing, 
-		   @QueryParam("isSuggestionsAllowed") boolean isSuggestionsAllowed) {
+		   @QueryParam("isSuggestionsAllowed") boolean isSuggestionsAllowed) throws Exception {
 		
 	   List<Long>  contactIds= new ArrayList<Long>();
+	   DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+	   Date date = df.parse(suggestedDate);;
 	   clientApi.createNewMeetup(description, suggestedLocation,
-			   suggestedDate, contactIds, isFacebookSharing,
+			   date, contactIds, isFacebookSharing,
 			   isTwitterSharing, isSuggestionsAllowed);
 	   return "success";
    }
