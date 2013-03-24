@@ -47,6 +47,7 @@ public class VeuneDaoImpl extends GenericDaoImpl<Venue, Integer> implements Venu
 		return (Venue) object;
 	}
 
+	@Override
     public Venue save(Venue venue) {
         if (venue.getId() == 0) {
                 persist(venue);
