@@ -4,16 +4,17 @@
    AS. -->
    <datasources>
          <datasource jndi-name="java:jboss/datasources/houtMySqlDatabase" enabled="true" use-java-context="true" pool-name="houtMySqlDatabase" use-ccm="true">
-                <connection-url>jdbc:postgresql://${env.OPENSHIFT_POSTGRESQL_DB_HOST}:${env.OPENSHIFT_POSTGRESQL_DB_PORT}/${env.OPENSHIFT_APP_NAME}</connection-url>
-                <driver>postgresql</driver>
-                <security>
-                  <user-name>admin</user-name>
-                  <password>faitKZKad5ed</password>
-                </security>
-                <validation>
-                  <check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
-                </validation>
-            </datasource>
+               <connection-url>jdbc:postgresql://${env.OPENSHIFT_POSTGRESQL_DB_HOST}:${env.OPENSHIFT_POSTGRESQL_DB_PORT}/${env.OPENSHIFT_APP_NAME}
+    	</connection-url>
+    	<driver>postgresql</driver>
+    	<security>
+        	<user-name>${env.OPENSHIFT_POSTGRESQL_DB_USERNAME}</user-name>
+        	<password>${env.OPENSHIFT_POSTGRESQL_DB_PASSWORD}</password>
+    	</security>
+    	<validation>
+        	<check-valid-connection-sql>SELECT 1</check-valid-connection-sql>
+    	</validation>
+	</datasource>
             <drivers>
                 <driver name="postgresql" module="org.postgresql">
  				<xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
