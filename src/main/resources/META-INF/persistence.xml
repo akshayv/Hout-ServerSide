@@ -9,7 +9,7 @@
          data source, this example data source is just for development and testing! -->
       <!-- The datasource is deployed as WEB-INF/kitchensink-quickstart-ds.xml, you
          can find it in the source at src/main/webapp/WEB-INF/kitchensink-quickstart-ds.xml -->
-      <jta-data-source>java:jboss/datasources/KitchensinkQuickstartDS</jta-data-source>
+      <jta-data-source>java:jboss/datasources/houtMySqlDatabase</jta-data-source>
       <class>com.hout.domain.entities.Meetup</class>
       <class>com.hout.domain.entities.Suggestion</class>
       <class>com.hout.domain.entities.User</class>
