@@ -34,6 +34,18 @@ public class VeuneDaoImpl extends GenericDaoImpl<Venue, Integer> implements Venu
 		q.setParameter("id", id);
 		return (Venue) q.getResultList();
 	}
+	
+
+	@Override
+	public Venue findByLocation(String location) {
+		Query q = em.createQuery("select m from Venue m where m.location=:location");
+		q.setParameter("location", location);
+		Object object = q.getResultList();
+		if(object != null) {
+			return null;
+		}
+		return (Venue) object;
+	}
 
     public Venue save(Venue venue) {
         if (venue.getId() == 0) {

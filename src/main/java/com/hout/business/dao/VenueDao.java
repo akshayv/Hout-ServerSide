@@ -11,4 +11,6 @@ public interface VenueDao extends GenericDao<Venue, Integer>{
 	public void remove(Venue venue);
 	
 	public boolean removeById(long id);
+
+	public Venue findByLocation(String location);
 }

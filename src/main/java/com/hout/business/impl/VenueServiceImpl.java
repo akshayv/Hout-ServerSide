@@ -1,13 +1,7 @@
 package com.hout.business.impl;
 
-import java.util.Date;
-import java.util.List;
-
 import javax.inject.Inject;
 
-import com.hout.domain.entities.Suggestion;
-import com.hout.domain.entities.SuggestionStatus;
-import com.hout.domain.entities.User;
 import com.hout.domain.entities.Venue;
 import com.hout.business.VenueService;
 import com.hout.business.dao.VenueDao;
@@ -20,6 +14,10 @@ public class VenueServiceImpl implements VenueService {
 	@Override
 	public Venue createNew(String location) {
 		Venue venue = new Venue(location);
+		Venue existingVenue = venueDao.findByLocation(location);
+		if(existingVenue  != null) {
+			return existingVenue;
+		}
 		venueDao.save(venue);
 		return venue;
 	}
