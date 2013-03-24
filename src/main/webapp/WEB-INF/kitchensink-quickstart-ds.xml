@@ -4,7 +4,7 @@
    AS. -->
    <datasources>
          <datasource jndi-name="java:jboss/datasources/houtMySqlDatabase" enabled="true" use-java-context="true" pool-name="houtMySqlDatabase" use-ccm="true">
-                <connection-url>jdbc:mysql://${env.OPENSHIFT_DB_HOST}:${env.OPENSHIFT_DB_PORT}/${env.OPENSHIFT_APP_NAME}</connection-url>
+                <connection-url>jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/hout</connection-url>
                 <driver>mysql</driver>
                 <security>
                   <user-name>${env.OPENSHIFT_DB_USERNAME}</user-name>
