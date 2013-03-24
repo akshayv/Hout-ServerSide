@@ -1,7 +1,9 @@
 package com.hout.domain.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,16 +33,16 @@ public class Meetup implements Serializable {
     Date finalizedDate;
 
     @ElementCollection
-    List<Suggestion> suggestions;
+    List<Suggestion> suggestions = new ArrayList<Suggestion>();
     
     @ElementCollection
-    List<Long> inviteeIds;
+    List<Long> inviteeIds = new ArrayList<Long>();
 
     @ElementCollection
-    Map<Long, Status> inviteeStatus;
+    Map<Long, Status> inviteeStatus = new HashMap<Long, Status>();
 
     @ElementCollection
-    List<String> pictureLocations;
+    List<String> pictureLocations = new ArrayList<String>();
 
     @NotNull
     boolean isFacebookSharing;
