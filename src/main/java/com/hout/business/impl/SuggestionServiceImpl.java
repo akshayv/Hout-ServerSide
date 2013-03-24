@@ -6,22 +6,28 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import com.hout.business.SuggestionService;
+import com.hout.business.VenueService;
 import com.hout.business.dao.SuggestionDao;
 import com.hout.domain.entities.Suggestion;
 import com.hout.domain.entities.SuggestionStatus;
 import com.hout.domain.entities.User;
+import com.hout.domain.entities.Venue;
 
 @Stateless
 public class SuggestionServiceImpl implements SuggestionService {
 	
 	@Inject
 	SuggestionDao suggestionDao;
+	
+	@Inject
+	VenueService venueService;
 
 	@Override
 	public Suggestion createNew(User user, String location, Date date) {
 		Suggestion suggestion = null;
 		if(!location.trim().equals("") && date!=null) {
-			suggestion =new Suggestion(user, location, date); 
+			Venue venue = venueService.createNew(location);
+			suggestion =new Suggestion(user, venue, date); 
 			suggestionDao.save(suggestion);
 			}
 		return suggestion;

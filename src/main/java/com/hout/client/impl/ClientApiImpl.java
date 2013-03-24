@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import com.hout.business.MeetupService;
 import com.hout.business.SuggestionService;
 import com.hout.business.UserService;
+import com.hout.business.VenueService;
 import com.hout.business.dao.MeetupDao;
 import com.hout.business.dao.SuggestionDao;
 import com.hout.client.ClientApi;
@@ -20,6 +21,7 @@ import com.hout.domain.entities.Status;
 import com.hout.domain.entities.Suggestion;
 import com.hout.domain.entities.SuggestionStatus;
 import com.hout.domain.entities.User;
+import com.hout.domain.entities.Venue;
 
 @Stateless
 public class ClientApiImpl implements ClientApi {
@@ -38,6 +40,9 @@ public class ClientApiImpl implements ClientApi {
 	
 	@Inject
 	private SuggestionDao suggestionDao;
+	
+	@Inject
+	private VenueService venueService;
 	
 	User currentUser = null;
 		
@@ -68,7 +73,8 @@ public class ClientApiImpl implements ClientApi {
 	@Override
 	public void addNewSuggestion(long meetupId, String suggestedPlace, Date suggestedTime) {
 		Meetup meetup = meetupDao.findById(meetupId);
-		Suggestion suggestion = new Suggestion(currentUser, suggestedPlace, suggestedTime);
+		Venue venue = venueService.createNew(suggestedPlace); 
+		Suggestion suggestion = new Suggestion(currentUser, venue, suggestedTime);
 		meetup.addSuggestions(suggestion);
 		RSVPToSuggestion(meetupId, suggestion.getId(), SuggestionStatus.YES);
 	}

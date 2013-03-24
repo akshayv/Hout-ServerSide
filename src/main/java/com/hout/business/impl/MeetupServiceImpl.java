@@ -11,11 +11,13 @@ import javax.inject.Inject;
 import com.hout.business.MeetupService;
 import com.hout.business.NotificationService;
 import com.hout.business.SuggestionService;
+import com.hout.business.VenueService;
 import com.hout.business.dao.MeetupDao;
 import com.hout.business.dao.UserDao;
 import com.hout.domain.entities.Meetup;
 import com.hout.domain.entities.Suggestion;
 import com.hout.domain.entities.User;
+import com.hout.domain.entities.Venue;
 
 @Stateless
 public class MeetupServiceImpl implements MeetupService {
@@ -30,6 +32,9 @@ public class MeetupServiceImpl implements MeetupService {
     
 	@Inject
     private UserDao userDao;
+	
+	@Inject
+    private VenueService venueService;
     
 	@Override
     public void removeInvitee(long meetupId, long userId) {
@@ -105,7 +110,8 @@ public class MeetupServiceImpl implements MeetupService {
 		if(toBeRemoved != null) {
 			suggestions.remove(toBeRemoved);
 		}
-		Suggestion suggestion = new Suggestion(user,location, date);
+		Venue venue = venueService.createNew(location);
+		Suggestion suggestion = new Suggestion(user,venue, date);
 		suggestions.add(suggestion);
 	}
 

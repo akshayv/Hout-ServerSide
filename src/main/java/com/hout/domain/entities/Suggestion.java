@@ -37,9 +37,9 @@ public class Suggestion implements Serializable {
     @ElementCollection
     List<Long> rejectedUserIds;
 
-    public Suggestion(User suggestedUser, String location, Date date) {
+    public Suggestion(User suggestedUser, Venue venue, Date date) {
     	this.suggestedUser = suggestedUser;
-    	this.venue = new Venue(location);
+    	this.venue = venue;
     	this.date = date;
     	}
 
