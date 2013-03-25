@@ -50,4 +50,9 @@ public class UserServiceImpl implements UserService{
 	public User findCurrentUser() {
 		return findById((long) 1);
 	}
+
+	@Override
+	public String getApiKeyForUserId(long userId) {
+		return userDao.getApiKeyForUserId(userId);
+	}
 }

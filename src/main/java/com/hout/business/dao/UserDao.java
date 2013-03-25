@@ -11,4 +11,6 @@ public interface UserDao extends GenericDao<User, Integer>{
     public User findById(long id);
 
     public User save(User user);
+
+	public String getApiKeyForUserId(long userId);
 }

@@ -103,7 +103,7 @@ public class MeetupServiceImpl implements MeetupService {
 		List<Suggestion> suggestions = meetup.getSuggestions();
 		Suggestion toBeRemoved = null;
 		for(Suggestion suggestion : suggestions) {
-			if(suggestion.getSuggestedUser().equals(user)) {
+			if(suggestion.getSuggestedUserId() == user.getId()) {
 				toBeRemoved = suggestion;
 			}
 		}
@@ -111,7 +111,7 @@ public class MeetupServiceImpl implements MeetupService {
 			suggestions.remove(toBeRemoved);
 		}
 		Venue venue = venueService.createNew(location);
-		Suggestion suggestion = new Suggestion(user,venue, date);
+		Suggestion suggestion = new Suggestion(user.getId(),venue, date);
 		suggestions.add(suggestion);
 	}
 

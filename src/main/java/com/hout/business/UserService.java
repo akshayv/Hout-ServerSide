@@ -18,4 +18,6 @@ public interface UserService {
 			List<Long> contacts);
 
 	public User findCurrentUser(); 
+	
+	public String getApiKeyForUserId(long userId);
 }

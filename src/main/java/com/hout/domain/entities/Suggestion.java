@@ -22,7 +22,7 @@ public class Suggestion implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	long id;
 	
-	User suggestedUser;
+	long suggestedUserId;
 
     Venue venue;
 
@@ -37,8 +37,8 @@ public class Suggestion implements Serializable {
     @ElementCollection
     List<Long> rejectedUserIds;
 
-    public Suggestion(User suggestedUser, Venue venue, Date date) {
-    	this.suggestedUser = suggestedUser;
+    public Suggestion(long suggestedUserId, Venue venue, Date date) {
+    	this.suggestedUserId = suggestedUserId;
     	this.venue = venue;
     	this.date = date;
     	}
@@ -86,12 +86,12 @@ public class Suggestion implements Serializable {
         this.undecidedUserIds = undecidedUserIds;
     }
     
-    public User getSuggestedUser() {
-        return suggestedUser;
+    public long getSuggestedUserId() {
+        return suggestedUserId;
     }
 
-    public void setSuggestedUser(User suggestedUser) {
-        this.suggestedUser = suggestedUser;
+    public void setSuggestedUserId(long suggestedUserId) {
+        this.suggestedUserId = suggestedUserId;
     }
     
     public long getId() {

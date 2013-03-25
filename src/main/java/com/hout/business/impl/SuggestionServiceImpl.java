@@ -27,7 +27,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 		Suggestion suggestion = null;
 		if(!location.trim().equals("") && date!=null) {
 			Venue venue = venueService.createNew(location);
-			suggestion =new Suggestion(user, venue, date); 
+			suggestion =new Suggestion(user.getId(), venue, date); 
 			suggestionDao.save(suggestion);
 			}
 		return suggestion;

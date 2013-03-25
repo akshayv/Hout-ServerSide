@@ -26,6 +26,8 @@ public class User implements Serializable {
     String name;
 
     String profilePictureLocation;
+    
+    String apiKey;
 
     @ElementCollection
     List<Long> contactIds;
@@ -38,6 +40,8 @@ public class User implements Serializable {
 
     long contactNumber;
 
+    public User() {
+    }
 
     public String getName() {
         return name;
@@ -61,6 +65,14 @@ public class User implements Serializable {
 
     public void setProfilePictureLocation(String profilePictureLocation) {
         this.profilePictureLocation = profilePictureLocation;
+    }
+    
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
     }
 
     public List<java.lang.Long> getContactIds() {

@@ -1,10 +1,7 @@
 package com.hout.client.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -17,7 +14,6 @@ import com.hout.business.dao.MeetupDao;
 import com.hout.business.dao.SuggestionDao;
 import com.hout.client.ClientApi;
 import com.hout.domain.entities.Meetup;
-import com.hout.domain.entities.Status;
 import com.hout.domain.entities.Suggestion;
 import com.hout.domain.entities.SuggestionStatus;
 import com.hout.domain.entities.User;
@@ -47,79 +43,58 @@ public class ClientApiImpl implements ClientApi {
 	User currentUser = null;
 		
 	@Override
-	public void createNewMeetup(String description, String suggestedLocation,
+	public void createNewMeetup(long userId, String apiKey, String description, String suggestedLocation,
 			Date suggestedDate, List<Long> contactIds,
 			boolean isFacebookSharing, boolean isTwitterSharing, 
-			boolean isSuggestionsAllowed) {
+			boolean isSuggestionsAllowed) throws Exception {
+		checkApiKey(userId, apiKey);
 		meetupService.createNew(currentUser, description, suggestedLocation, 
 				suggestedDate, contactIds, isFacebookSharing, isTwitterSharing, 
 				isSuggestionsAllowed);
 	}
 
+	private void checkApiKey(long userId, String apiKey) throws Exception {
+		String actualApiKey = userService.getApiKeyForUserId(userId);
+		if(!apiKey.equals(actualApiKey)){
+			throw new Exception("Authorization problem");
+		}
+		currentUser = userService.findById(userId);
+	}
+
 	@Override
 	public void createNewUser(String name, String profilePictureLocation,
-			List<Long> contacts) {
+			String apiKey, List<Long> contacts) {
 			User user = userService.createNewUser(name, profilePictureLocation,contacts);
 			userService.addNewUser(user);
 		}
 
 	@Override
-	public void RSVPToSuggestion(long meetupId, long suggestionId, SuggestionStatus status) {
+	public void RSVPToSuggestion(long userId, String apiKey, long meetupId, long suggestionId, SuggestionStatus status) throws Exception {
+		checkApiKey(userId, apiKey);
 		suggestionService.RSVP(currentUser, suggestionId, status);
 		meetupService.removeUnnecessarySuggestions(meetupId);
 		meetupService.checkAndFinalizeDetails(meetupId);
 	}
 
 	@Override
-	public void addNewSuggestion(long meetupId, String suggestedPlace, Date suggestedTime) {
+	public void addNewSuggestion(long userId, String apiKey, long meetupId, String suggestedPlace, Date suggestedTime) throws Exception{
+		checkApiKey(userId, apiKey);
 		Meetup meetup = meetupDao.findById(meetupId);
 		Venue venue = venueService.createNew(suggestedPlace); 
-		Suggestion suggestion = new Suggestion(currentUser, venue, suggestedTime);
+		Suggestion suggestion = new Suggestion(currentUser.getId(), venue, suggestedTime);
 		meetup.addSuggestions(suggestion);
-		RSVPToSuggestion(meetupId, suggestion.getId(), SuggestionStatus.YES);
+		RSVPToSuggestion(userId, apiKey, meetupId, suggestion.getId(), SuggestionStatus.YES);
 	}
 
 	@Override
-	public List<Suggestion> getSuggestionsForMeetup(long meetupId) {
+	public List<Suggestion> getSuggestionsForMeetup(long userId, String apiKey, long meetupId) throws Exception{
+		checkApiKey(userId, apiKey);
 		Meetup meetup = meetupDao.findById(meetupId);
 		return meetup.getSuggestions();
 	}
 
 	@Override
-	public List<User> getAcceptedForSuggestion(long meetupId, long suggestionId) {
-		Suggestion suggestion = suggestionDao.findById(suggestionId);
-		List<Long> userIds =  suggestion.getAcceptedUserIds();
-		List<User> users = new ArrayList<User>();
-		for(Long userId : userIds) {
-			users.add(userService.findById(userId));
-		}
-		return users;
-	}
-
-	@Override
-	public List<User> getRejectedForSuggestion(long meetupId, long suggestionId) {
-		Suggestion suggestion = suggestionDao.findById(suggestionId);
-		List<Long> userIds =  suggestion.getRejectedUserIds();
-		List<User> users = new ArrayList<User>();
-		for(Long userId : userIds) {
-			users.add(userService.findById(userId));
-		}
-		return users;
-	}
-
-	@Override
-	public Map<User, Status> getStatusForMeetup(long meetupId) {
-		Meetup meetup = meetupDao.findById(meetupId);
-		Map<Long, Status> userIdStatus = meetup.getInviteeStatus();
-		Map<User, Status> userStatus = new HashMap<User, Status>();
-		for (Long userId : userIdStatus.keySet()) {
-			userStatus.put(userService.findById(userId), userIdStatus.get(userId));
-		}
-		return userStatus;
-	}
-
-	@Override
-	public Meetup findMeetupById(long meetupId) {
+	public Meetup findMeetupById(long userId, String apiKey, long meetupId) {
 		return meetupDao.findById(meetupId);
 	}
 }
