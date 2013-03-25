@@ -64,7 +64,8 @@ public class ClientApiImpl implements ClientApi {
 	@Override
 	public void createNewUser(String name, String profilePictureLocation,
 			String apiKey, List<Long> contacts) {
-			User user = userService.createNewUser(name, profilePictureLocation,contacts);
+			User user = userService.createNewUser(name, profilePictureLocation,
+					apiKey, contacts);
 			userService.addNewUser(user);
 		}
 

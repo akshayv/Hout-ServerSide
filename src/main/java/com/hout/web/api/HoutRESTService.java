@@ -35,7 +35,8 @@ public class HoutRESTService {
    public String createUser(@QueryParam("name") String name,
 		   @QueryParam("profilePictureLocation") String profilePictureLocation, 
 		   @QueryParam("apiKey") String apiKey) throws Exception {
-	   clientApi.createNewUser(name, profilePictureLocation, apiKey, null);
+	   List<Long> contacts = new ArrayList<Long>();
+	   clientApi.createNewUser(name, profilePictureLocation, apiKey, contacts);
 	   return "success";
    }
     
