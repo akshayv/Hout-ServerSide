@@ -44,7 +44,7 @@ public class VeuneDaoImpl extends GenericDaoImpl<Venue, Integer> implements Venu
 		q.setParameter("location", location);
 		@SuppressWarnings("unchecked")
 		List<Venue> object = q.getResultList();
-		if(object == null) {
+		if(object == null || object.size() == 0) {
 			return null;
 		}
 		return (Venue) object.get(0);
