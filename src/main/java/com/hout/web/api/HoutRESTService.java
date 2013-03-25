@@ -32,15 +32,19 @@ public class HoutRESTService {
    @GET
    @Path("/createUser")
    @Produces("text/plain")
-   public String createUser(@QueryParam("name") String name, @QueryParam("profilePictureLocation") String profilePictureLocation) {
-	   clientApi.createNewUser(name, profilePictureLocation, null);
+   public String createUser(@QueryParam("name") String name,
+		   @QueryParam("profilePictureLocation") String profilePictureLocation, 
+		   @QueryParam("apiKey") String apiKey) throws Exception {
+	   clientApi.createNewUser(name, profilePictureLocation, apiKey, null);
 	   return "success";
    }
     
    @GET
    @Path("/createMeetup")
    @Produces("text/plain")
-   public String createMeetup(@QueryParam("description") String description, 
+   public String createMeetup(@QueryParam("userId") long userId, 
+		   @QueryParam("apiKey") String apiKey, 
+		   @QueryParam("description") String description, 
 		   @QueryParam("suggestedLocation") String suggestedLocation,
 		   @QueryParam("suggestedDate")  String suggestedDate, 
 		   @QueryParam("isFacebookSharing") boolean isFacebookSharing,
@@ -50,7 +54,7 @@ public class HoutRESTService {
 	   List<Long>  contactIds= new ArrayList<Long>();
 	   DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
 	   Date date = df.parse(suggestedDate);;
-	   clientApi.createNewMeetup(description, suggestedLocation,
+	   clientApi.createNewMeetup(userId, apiKey, description, suggestedLocation,
 			   date, contactIds, isFacebookSharing,
 			   isTwitterSharing, isSuggestionsAllowed);
 	   return "success";
@@ -59,25 +63,30 @@ public class HoutRESTService {
    @GET
    @Path("/addSuggestion")
    @Produces("text/plain")
-   public String addSuggestion(@QueryParam("meetupId")long meetupId, 
+   public String addSuggestion(@QueryParam("userId") long userId, 
+		   @QueryParam("apiKey") String apiKey,
+		   @QueryParam("meetupId")long meetupId, 
 		   @QueryParam("suggestedLocation") String suggestedLocation,
 		   @QueryParam("suggestedDate")  String suggestedDate) throws Exception {
 		
 	   DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
 	   Date date = df.parse(suggestedDate);
-	   clientApi.addNewSuggestion(meetupId, suggestedLocation, date);
+	   clientApi.addNewSuggestion(userId, apiKey, 
+			   meetupId, suggestedLocation, date);
 	   return "success";
    }
    
    @GET
    @Path("/RSVP")
    @Produces("text/plain")
-   public String RSVPToSuggestion(
+   public String RSVPToSuggestion(@QueryParam("userId") long userId, 
+		   @QueryParam("apiKey") String apiKey,
 		   @QueryParam("meetupId")long meetupId,
 		   @QueryParam("suggestionId")long suggestionId,
 		   @QueryParam("Status")SuggestionStatus status) throws Exception {
 		
-	   clientApi.RSVPToSuggestion(meetupId, suggestionId, status);
+	   clientApi.RSVPToSuggestion(userId, apiKey, 
+			   meetupId, suggestionId, status);
 	   return "success";
    }
    
