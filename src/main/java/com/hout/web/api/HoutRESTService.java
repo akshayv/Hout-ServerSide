@@ -2,7 +2,6 @@ package com.hout.web.api;
 
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +16,7 @@ import javax.ws.rs.QueryParam;
 
 
 import com.hout.client.ClientApi;
+import com.hout.domain.entities.SuggestionStatus;
 
 /**
  * JAX-RS Example
@@ -55,4 +55,31 @@ public class HoutRESTService {
 			   isTwitterSharing, isSuggestionsAllowed);
 	   return "success";
    }
+   
+   @GET
+   @Path("/addSuggestion")
+   @Produces("text/plain")
+   public String addSuggestion(@QueryParam("meetupId")long meetupId, 
+		   @QueryParam("suggestedLocation") String suggestedLocation,
+		   @QueryParam("suggestedDate")  String suggestedDate) throws Exception {
+		
+	   DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+	   Date date = df.parse(suggestedDate);
+	   clientApi.addNewSuggestion(meetupId, suggestedLocation, date);
+	   return "success";
+   }
+   
+   @GET
+   @Path("/RSVP")
+   @Produces("text/plain")
+   public String RSVPToSuggestion(
+		   @QueryParam("meetupId")long meetupId,
+		   @QueryParam("suggestionId")long suggestionId,
+		   @QueryParam("Status")SuggestionStatus status) throws Exception {
+		
+	   clientApi.RSVPToSuggestion(meetupId, suggestionId, status);
+	   return "success";
+   }
+   
+   
 }
