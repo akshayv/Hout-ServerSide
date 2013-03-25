@@ -70,7 +70,8 @@ public class ClientApiImpl implements ClientApi {
 		}
 
 	@Override
-	public void RSVPToSuggestion(long userId, String apiKey, long meetupId, long suggestionId, SuggestionStatus status) throws Exception {
+	public void RSVPToSuggestion(long userId, String apiKey, 
+			long meetupId, long suggestionId, SuggestionStatus status) throws Exception {
 		checkApiKey(userId, apiKey);
 		suggestionService.RSVP(currentUser, suggestionId, status);
 		meetupService.removeUnnecessarySuggestions(meetupId);

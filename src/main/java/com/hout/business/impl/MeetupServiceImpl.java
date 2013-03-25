@@ -54,9 +54,8 @@ public class MeetupServiceImpl implements MeetupService {
 		meetup.setInviteeIds(contactIds);
 		Suggestion suggestion = suggestionService.createNew(user, suggestedLocation, suggestedDate);
 		suggestion.setUndecidedUserIds(contactIds);
-		if(suggestion != null) {
-			meetup.addSuggestions(suggestion);
-		}
+		suggestion.getAcceptedUserIds().add(user.getId());
+		meetup.addSuggestions(suggestion);
 		addNew(meetup);
 		notificationService.notify(meetup, "New meetup has been created");
 	}

@@ -53,6 +53,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 		} else if(status == SuggestionStatus.NO) {
 			suggestion.getRejectedUserIds().add(userId);
 		}
+		suggestionDao.save(suggestion);
 	}
 
 	@Override
