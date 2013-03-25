@@ -53,7 +53,7 @@ public class MeetupServiceImpl implements MeetupService {
 		meetup.setIsSuggestionsAllowed(isSuggestionsAllowed);
 		meetup.setInviteeIds(contactIds);
 		Suggestion suggestion = suggestionService.createNew(user, suggestedLocation, suggestedDate);
-		suggestion.setUndecidedUserIds(contactIds);
+		suggestion.getUndecidedUserIds().addAll(contactIds);
 		suggestion.getAcceptedUserIds().add(user.getId());
 		meetup.addSuggestions(suggestion);
 		addNew(meetup);

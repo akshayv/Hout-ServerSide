@@ -1,6 +1,7 @@
 package com.hout.domain.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,13 +30,13 @@ public class Suggestion implements Serializable {
     Date date;
 
     @ElementCollection
-    List<Long> acceptedUserIds;
+    List<Long> acceptedUserIds = new ArrayList<Long>();
 
     @ElementCollection
-    List<Long> undecidedUserIds;
+    List<Long> undecidedUserIds = new ArrayList<Long>();
 
     @ElementCollection
-    List<Long> rejectedUserIds;
+    List<Long> rejectedUserIds = new ArrayList<Long>();
 
     public Suggestion(long suggestedUserId, Venue venue, Date date) {
     	this.suggestedUserId = suggestedUserId;
