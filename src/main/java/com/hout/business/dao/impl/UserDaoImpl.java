@@ -60,10 +60,10 @@ public class UserDaoImpl extends GenericDaoImpl<User, Integer> implements UserDa
 
 	@Override
 	public String getApiKeyForUserId(long userId) {
-		Query q = em.createQuery("select m.apiKey from User m where m.id=:id");
+		Query q = em.createQuery("select m from User m where m.id=:id");
 		q.setParameter("id", userId);
 		try {
-			return (String) q.getResultList().get(0);
+			return ((User) q.getResultList().get(0)).getApiKey();
 		} catch(Exception e) {
 			return null;
 		}
