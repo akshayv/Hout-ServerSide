@@ -84,7 +84,7 @@ public class HoutRESTService {
 		   @QueryParam("apiKey") String apiKey,
 		   @QueryParam("meetupId")long meetupId,
 		   @QueryParam("suggestionId")long suggestionId,
-		   @QueryParam("Status")SuggestionStatus status) throws Exception {
+		   @QueryParam("status")SuggestionStatus status) throws Exception {
 		
 	   clientApi.RSVPToSuggestion(userId, apiKey, 
 			   meetupId, suggestionId, status);

@@ -1,5 +1,7 @@
 package com.hout.business.dao.impl;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -32,7 +34,7 @@ public class VeuneDaoImpl extends GenericDaoImpl<Venue, Integer> implements Venu
 	public Venue findById(Long id) { 
 		Query q = em.createQuery("select m from Venue m where m.id=:id");
 		q.setParameter("id", id);
-		return (Venue) q.getResultList();
+		return (Venue) q.getResultList().get(0);
 	}
 	
 
@@ -40,11 +42,12 @@ public class VeuneDaoImpl extends GenericDaoImpl<Venue, Integer> implements Venu
 	public Venue findByLocation(String location) {
 		Query q = em.createQuery("select m from Venue m where m.location=:location");
 		q.setParameter("location", location);
-		Object object = q.getResultList();
-		if(object != null) {
+		@SuppressWarnings("unchecked")
+		List<Venue> object = q.getResultList();
+		if(object == null) {
 			return null;
 		}
-		return (Venue) object;
+		return (Venue) object.get(0);
 	}
 
 	@Override

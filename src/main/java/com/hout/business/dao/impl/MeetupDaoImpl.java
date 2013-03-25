@@ -22,7 +22,7 @@ public class MeetupDaoImpl extends GenericDaoImpl<Meetup, Integer> implements Me
 	public Meetup findById(long id) { 
 		Query q = em.createQuery("select m from Meetup m where m.id=:id");
 		q.setParameter("id", id);
-		return (Meetup) q.getResultList();
+		return (Meetup) q.getResultList().get(0);
 	}
 
     public MeetupDaoImpl() {

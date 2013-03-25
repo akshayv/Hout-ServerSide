@@ -1,6 +1,5 @@
 package com.hout.business.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;

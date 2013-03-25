@@ -27,7 +27,7 @@ public class SuggestionDaoImpl extends GenericDaoImpl<Suggestion, Integer> imple
 	public Suggestion findById(long id) { 
 		Query q = em.createQuery("select m from Suggestion m where m.id=:id");
 		q.setParameter("id", id);
-		return (Suggestion) q.getResultList();
+		return (Suggestion) q.getResultList().get(0);
 	}
 
     public Suggestion save(Suggestion suggestion) {
