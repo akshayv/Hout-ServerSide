@@ -49,6 +49,7 @@ public class ClientApiImpl implements ClientApi {
 			boolean isFacebookSharing, boolean isTwitterSharing, 
 			boolean isSuggestionsAllowed) throws Exception {
 		checkApiKey(userId, apiKey);
+		
 		meetupService.createNew(currentUser, description, suggestedLocation, 
 				suggestedDate, contactIds, isFacebookSharing, isTwitterSharing, 
 				isSuggestionsAllowed);
