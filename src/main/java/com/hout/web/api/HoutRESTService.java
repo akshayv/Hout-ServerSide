@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -36,7 +37,11 @@ public class HoutRESTService {
 		   @QueryParam("profilePictureLocation") String profilePictureLocation, 
 		   @QueryParam("apiKey") String apiKey) throws Exception {
 	   List<Long> contacts = new ArrayList<Long>();
-	   clientApi.createNewUser(name, profilePictureLocation, apiKey, contacts);
+	   try {
+		   clientApi.createNewUser(name, profilePictureLocation, apiKey, contacts);
+	   } catch(Exception e) {
+		   return e.getMessage();
+	   }
 	   return "success";
    }
     
@@ -50,14 +55,23 @@ public class HoutRESTService {
 		   @QueryParam("suggestedDate")  String suggestedDate, 
 		   @QueryParam("isFacebookSharing") boolean isFacebookSharing,
 		   @QueryParam("isTwitterSharing") boolean isTwitterSharing, 
-		   @QueryParam("isSuggestionsAllowed") boolean isSuggestionsAllowed) throws Exception {
+		   @QueryParam("isSuggestionsAllowed") boolean isSuggestionsAllowed, 
+		   @QueryParam("inviteeIds") Set<Long> inviteeIds) throws Exception {
 		
-	   List<Long>  contactIds= new ArrayList<Long>();
-	   DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
-	   Date date = df.parse(suggestedDate);;
-	   clientApi.createNewMeetup(userId, apiKey, description, suggestedLocation,
-			   date, contactIds, isFacebookSharing,
-			   isTwitterSharing, isSuggestionsAllowed);
+	   Date date;
+	   try {	
+		   DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+		   date = df.parse(suggestedDate);
+	   } catch (Exception e) {
+		   return "Unparsable Date";
+	   }
+	   try {
+		   clientApi.createNewMeetup(userId, apiKey, description, suggestedLocation,
+				   date, inviteeIds, isFacebookSharing,
+				   isTwitterSharing, isSuggestionsAllowed);
+	   } catch(Exception e) {
+		   return e.getMessage();
+	   }
 	   return "success";
    }
    
@@ -70,10 +84,19 @@ public class HoutRESTService {
 		   @QueryParam("suggestedLocation") String suggestedLocation,
 		   @QueryParam("suggestedDate")  String suggestedDate) throws Exception {
 		
-	   DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
-	   Date date = df.parse(suggestedDate);
-	   clientApi.addNewSuggestion(userId, apiKey, 
+	   Date date = null;
+	   try {	
+		   DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+		   date = df.parse(suggestedDate);
+	   } catch (Exception e) {
+		   return "Unparsable Date";
+	   }
+	   try {
+		   clientApi.addNewSuggestion(userId, apiKey, 
 			   meetupId, suggestedLocation, date);
+		   } catch(Exception e) {
+			   return e.getMessage();
+	   }
 	   return "success";
    }
    
@@ -84,10 +107,14 @@ public class HoutRESTService {
 		   @QueryParam("apiKey") String apiKey,
 		   @QueryParam("meetupId")long meetupId,
 		   @QueryParam("suggestionId")long suggestionId,
-		   @QueryParam("status")SuggestionStatus status) throws Exception {
+		   @QueryParam("status")SuggestionStatus status) {
 		
-	   clientApi.RSVPToSuggestion(userId, apiKey, 
-			   meetupId, suggestionId, status);
+	   try {
+		   clientApi.RSVPToSuggestion(userId, apiKey, 
+	  	   meetupId, suggestionId, status);
+	   } catch(Exception e) {
+		   return e.getMessage();
+	   }
 	   return "success";
    }
    

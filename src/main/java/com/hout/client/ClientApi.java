@@ -3,6 +3,7 @@ package com.hout.client;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import com.hout.domain.entities.Meetup;
 import com.hout.domain.entities.Suggestion;
@@ -10,7 +11,7 @@ import com.hout.domain.entities.SuggestionStatus;
 
 public interface ClientApi {
 
-    public void createNewMeetup(long userId, String apiKey, String description, String suggestedLocation, Date suggestedDate, List<Long> contactIds,
+    public void createNewMeetup(long userId, String apiKey, String description, String suggestedLocation, Date suggestedDate, Set<Long> contactIds,
                                 boolean isFacebookSharing, boolean isTwitterSharing, boolean isSuggestionsAllowed) throws Exception;
 
     public void createNewUser(String name, String profilePictureLocation, String apiKey, List<Long> contacts) throws Exception;

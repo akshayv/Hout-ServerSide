@@ -15,14 +15,18 @@ public class MeetupDaoImpl extends GenericDaoImpl<Meetup, Integer> implements Me
 		
 	@Override
 	public boolean removeById(long id) {
-	        return super.removeById((int) id);
+		return super.removeById((int) id);
 	}
 
 	@Override
 	public Meetup findById(long id) { 
 		Query q = em.createQuery("select m from Meetup m where m.id=:id");
 		q.setParameter("id", id);
-		return (Meetup) q.getResultList().get(0);
+		try {
+			return (Meetup) q.getResultList().get(0);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
     public MeetupDaoImpl() {

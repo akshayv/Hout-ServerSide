@@ -2,6 +2,7 @@ package com.hout.client.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -44,7 +45,7 @@ public class ClientApiImpl implements ClientApi {
 		
 	@Override
 	public void createNewMeetup(long userId, String apiKey, String description, String suggestedLocation,
-			Date suggestedDate, List<Long> contactIds,
+			Date suggestedDate, Set<Long> contactIds,
 			boolean isFacebookSharing, boolean isTwitterSharing, 
 			boolean isSuggestionsAllowed) throws Exception {
 		checkApiKey(userId, apiKey);

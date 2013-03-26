@@ -53,7 +53,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public String getApiKeyForUserId(long userId) {
-		return userDao.getApiKeyForUserId(userId);
+	public String getApiKeyForUserId(long userId) throws Exception {
+		String apiKey = userDao.getApiKeyForUserId(userId);
+		if(apiKey == null) {
+			throw new Exception("Cannot find user. Please checck Id");
+		}
+		return apiKey;
 	}
 }

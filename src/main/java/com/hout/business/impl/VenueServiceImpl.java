@@ -14,9 +14,11 @@ public class VenueServiceImpl implements VenueService {
 	@Override
 	public Venue createNew(String location) {
 		Venue existingVenue = venueDao.findByLocation(location);
+		
 		if(existingVenue  != null) {
 			return existingVenue;
 		}
+		
 		Venue venue = new Venue();
 		venue.setLocation(location);
 		venueDao.save(venue);

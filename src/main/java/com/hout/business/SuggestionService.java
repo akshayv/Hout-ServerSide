@@ -10,7 +10,7 @@ public interface SuggestionService {
 	
 	public Suggestion createNew(User user, String location, Date date);
 	
-	public void RSVP(User user, long suggestionId, SuggestionStatus status);
+	public void RSVP(User user, long suggestionId, SuggestionStatus status) throws Exception;
 	
 	public void remove(long id);
 

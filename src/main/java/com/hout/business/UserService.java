@@ -19,5 +19,5 @@ public interface UserService {
 
 	public User findCurrentUser(); 
 	
-	public String getApiKeyForUserId(long userId);
+	public String getApiKeyForUserId(long userId) throws Exception;
 }

@@ -34,7 +34,11 @@ public class VeuneDaoImpl extends GenericDaoImpl<Venue, Integer> implements Venu
 	public Venue findById(Long id) { 
 		Query q = em.createQuery("select m from Venue m where m.id=:id");
 		q.setParameter("id", id);
+		try {
 		return (Venue) q.getResultList().get(0);
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 
@@ -42,12 +46,13 @@ public class VeuneDaoImpl extends GenericDaoImpl<Venue, Integer> implements Venu
 	public Venue findByLocation(String location) {
 		Query q = em.createQuery("select m from Venue m where m.location=:location");
 		q.setParameter("location", location);
-		@SuppressWarnings("unchecked")
-		List<Venue> object = q.getResultList();
-		if(object == null || object.size() == 0) {
+		try {
+			@SuppressWarnings("unchecked")
+			List<Venue> object = q.getResultList();
+			return object.get(0);
+		} catch (Exception e) {
 			return null;
 		}
-		return (Venue) object.get(0);
 	}
 
 	@Override

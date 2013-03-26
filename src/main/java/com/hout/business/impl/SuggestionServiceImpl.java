@@ -34,8 +34,12 @@ public class SuggestionServiceImpl implements SuggestionService {
 	}
 
 	@Override
-	public void RSVP(User user, long suggestionId, SuggestionStatus status) {
+	public void RSVP(User user, long suggestionId, SuggestionStatus status) throws Exception {
 		Suggestion suggestion = suggestionDao.findById(suggestionId);
+		if(suggestion == null) {
+			throw new Exception("Cannot find Suggestion. Please check id");
+		}
+		
 		Long userId = user.getId();
 		if(suggestion.getUndecidedUserIds().contains(userId)) {
 			suggestion.getUndecidedUserIds().remove(userId);
@@ -48,9 +52,9 @@ public class SuggestionServiceImpl implements SuggestionService {
 	}
 
 	private void setRSVPStatus(long userId, Suggestion suggestion, SuggestionStatus status) {
-		if(status == SuggestionStatus.YES) {
+		if(status.equals(SuggestionStatus.YES)) {
 			suggestion.getAcceptedUserIds().add(userId);
-		} else if(status == SuggestionStatus.NO) {
+		} else if(status.equals(SuggestionStatus.NO)) {
 			suggestion.getRejectedUserIds().add(userId);
 		}
 		suggestionDao.save(suggestion);
@@ -59,6 +63,5 @@ public class SuggestionServiceImpl implements SuggestionService {
 	@Override
 	public void remove(long id) {
 		suggestionDao.removeById(id);
-	}
-
+	}	
 }
