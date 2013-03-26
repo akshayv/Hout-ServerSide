@@ -81,6 +81,7 @@ public class MeetupServiceImpl implements MeetupService {
 	@Override
 	public void checkAndFinalizeDetails(long meetupId) throws Exception {
 	
+		boolean hasBeenFinalized = false;
 		Meetup meetup = meetupDao.findById(meetupId);
 		if(meetup == null) {
 		 	throw new Exception("Meetup not found. Please check the id");
@@ -95,10 +96,15 @@ public class MeetupServiceImpl implements MeetupService {
 				meetup.setFinalizedDate(suggestion.getDate());
 				meetup.setFinalizedLocation(suggestion.getVenue());
 				
-				notificationService.notify(meetup, "Details for meetup have been finalized");
+				hasBeenFinalized = true;
 				
+				notificationService.notify(meetup, "Details for meetup have been finalized");
 				break;
 			}
+		}
+		if(!hasBeenFinalized) {
+			meetup.setFinalizedDate(null);
+			meetup.setFinalizedLocation(null);
 		}
 	}
 	
