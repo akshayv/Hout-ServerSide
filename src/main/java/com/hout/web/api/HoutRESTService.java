@@ -25,7 +25,7 @@ import com.hout.domain.entities.SuggestionStatus;
  * This class produces a RESTful service to read the contents of the members table.
  */
 @RequestScoped
-@Path("/members")
+@Path("/hout")
 public class HoutRESTService {
    @Inject
    private ClientApi clientApi;
@@ -36,6 +36,17 @@ public class HoutRESTService {
    public String createUser(@QueryParam("name") String name,
 		   @QueryParam("profilePictureLocation") String profilePictureLocation, 
 		   @QueryParam("apiKey") String apiKey) throws Exception {
+	   
+	   if(name == null) {
+		   return "Name not specified";
+	   }
+	   if(profilePictureLocation == null) {
+		   return "Profile Picture location not specified";
+	   }
+	   if(apiKey == null) {
+		   return "Api Key not specified";
+	   }
+	   
 	   List<Long> contacts = new ArrayList<Long>();
 	   try {
 		   clientApi.createNewUser(name, profilePictureLocation, apiKey, contacts);
@@ -57,7 +68,16 @@ public class HoutRESTService {
 		   @QueryParam("isTwitterSharing") boolean isTwitterSharing, 
 		   @QueryParam("isSuggestionsAllowed") boolean isSuggestionsAllowed, 
 		   @QueryParam("inviteeIds") Set<Long> inviteeIds) throws Exception {
-		
+	   if(userId == 0) {
+		   return "userId not specified";
+	   }
+	   if(apiKey == null) {
+		   return "Api Key not specified";
+	   }
+	   if(inviteeIds.isEmpty()) {
+		   return "No Invitees specified";
+	   }
+	   
 	   Date date;
 	   try {	
 		   DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
@@ -84,6 +104,12 @@ public class HoutRESTService {
 		   @QueryParam("suggestedLocation") String suggestedLocation,
 		   @QueryParam("suggestedDate")  String suggestedDate) throws Exception {
 		
+	   if(userId == 0) {
+		   return "userId not specified";
+	   }
+	   if(apiKey == null) {
+		   return "Api Key not specified";
+	   }
 	   Date date = null;
 	   try {	
 		   DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
@@ -109,6 +135,25 @@ public class HoutRESTService {
 		   @QueryParam("suggestionId")long suggestionId,
 		   @QueryParam("status")SuggestionStatus status) {
 		
+	   if(userId == 0) {
+		   return "userId not specified";
+	   }
+	   if(apiKey == null) {
+		   return "Api Key not specified";
+	   }
+	   if(meetupId == 0) {
+		   return "meetupId not specified";
+	   }
+	   if(suggestionId == 0) {
+		   return "suggestionId not specified";
+	   }
+	   if(userId == 0) {
+		   return "userId not specified";
+	   }
+	   if(status == null) {
+		   return "Status not specified";
+	   }
+	   
 	   try {
 		   clientApi.RSVPToSuggestion(userId, apiKey, 
 	  	   meetupId, suggestionId, status);
@@ -117,6 +162,4 @@ public class HoutRESTService {
 	   }
 	   return "success";
    }
-   
-   
 }
