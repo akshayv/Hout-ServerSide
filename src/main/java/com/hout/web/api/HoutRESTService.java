@@ -29,14 +29,14 @@ public interface HoutRESTService {
    
    @GET
    @Path("/createUser")
-   @Produces("text/json")
+   @Produces("application/json")
    public HoutUserResponse createUser(@QueryParam("name") String name,
 		   @QueryParam("profilePictureLocation") String profilePictureLocation, 
 		   @QueryParam("apiKey") String apiKey) throws HoutException;
     
    @GET
    @Path("/createMeetup")
-   @Produces("text/json")
+   @Produces("application/json")
    public HoutMeetupResponse createMeetup(@QueryParam("userId") long userId, 
 		   @QueryParam("apiKey") String apiKey, 
 		   @QueryParam("description") String description, 
@@ -49,7 +49,7 @@ public interface HoutRESTService {
    
    @GET
    @Path("/addSuggestion")
-   @Produces("text/json")
+   @Produces("application/json")
    public HoutSuggestionResponse addSuggestion(@QueryParam("userId") long userId, 
 		   @QueryParam("apiKey") String apiKey,
 		   @QueryParam("meetupId")long meetupId, 
@@ -58,7 +58,7 @@ public interface HoutRESTService {
    
    @GET
    @Path("/RSVP")
-   @Produces("text/xml")
+   @Produces("application/json")
    public Status RSVPToSuggestion(@QueryParam("userId") long userId, 
 		   @QueryParam("apiKey") String apiKey,
 		   @QueryParam("meetupId")long meetupId,
@@ -67,7 +67,7 @@ public interface HoutRESTService {
 
    @GET
    @Path("/addInvitee")
-   @Produces("text/json")
+   @Produces("application/json")
    public HoutAdditionalInviteesResponse addInviteesToMeetup(@QueryParam("userId")long userId,
 		   @QueryParam("apiKey")String apiKey,
 		   @QueryParam("inviteeIds")Set<Long> inviteeIds,
@@ -75,7 +75,7 @@ public interface HoutRESTService {
    
    @GET
    @Path("/declineMeetup")
-   @Produces("text/json")
+   @Produces("application/json")
    public Status declineMeetup(@QueryParam("userId")long userId,
 		   @QueryParam("apiKey") String apiKey, 
 		   @QueryParam("meetupId")long meetupId) throws HoutException;
