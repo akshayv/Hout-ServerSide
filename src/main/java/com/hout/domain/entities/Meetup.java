@@ -23,7 +23,6 @@ public class Meetup implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	long id;
 
-	@NotNull
     String description;
 
     Venue finalizedLocation;
