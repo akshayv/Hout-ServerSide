@@ -1,11 +1,9 @@
 package com.hout.domain.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -33,16 +31,16 @@ public class Meetup implements Serializable {
     Date finalizedDate;
 
     @ElementCollection
-    List<Suggestion> suggestions = new ArrayList<Suggestion>();
+    Set<Suggestion> suggestions = new HashSet<Suggestion>();
     
     @ElementCollection
-    List<Long> inviteeIds = new ArrayList<Long>();
+    Set<Long> inviteeIds = new HashSet<Long>();
 
     @ElementCollection
-    Map<Long, Status> inviteeStatus = new HashMap<Long, Status>();
+    Set<Long> rejectedUserIds = new HashSet<Long>();
 
     @ElementCollection
-    List<String> pictureLocations = new ArrayList<String>();
+    Set<String> pictureLocations = new HashSet<String>();
 
     @NotNull
     boolean isFacebookSharing;
@@ -90,27 +88,27 @@ public class Meetup implements Serializable {
         this.finalizedDate = finalizedDate;
     }
 
-    public List<Suggestion> getSuggestions() {
+    public Set<Suggestion> getSuggestions() {
         return suggestions;
     }
 
-    public void setSuggestions(List<Suggestion> suggestions) {
+    public void setSuggestions(Set<Suggestion> suggestions) {
         this.suggestions = suggestions;
     }
 
-    public Map<java.lang.Long, Status> getInviteeStatus() {
-        return inviteeStatus;
+    public Set<Long> getRejectedUserIds() {
+        return rejectedUserIds;
     }
 
-    public void setInviteeStatus(Map<java.lang.Long, Status> inviteeStatus) {
-        this.inviteeStatus = inviteeStatus;
+    public void setRejectedUserIds(Set<Long> rejetctedUserIds) {
+        this.rejectedUserIds = rejetctedUserIds;
     }
 
-    public List<String> getPictureLocations() {
+    public Set<String> getPictureLocations() {
         return pictureLocations;
     }
 
-    public void setPictureLocations(List<String> pictureLocations) {
+    public void setPictureLocations(Set<String> pictureLocations) {
         this.pictureLocations = pictureLocations;
     }
 
@@ -142,11 +140,11 @@ public class Meetup implements Serializable {
     	suggestions.add(suggestion);
     }
 
-    public List<Long> getInviteeIds() {
+    public Set<Long> getInviteeIds() {
         return inviteeIds;
     }
 
-    public void setInviteeIds(List<Long> inviteeIds) {
+    public void setInviteeIds(Set<Long> inviteeIds) {
         this.inviteeIds = inviteeIds;
     }
 

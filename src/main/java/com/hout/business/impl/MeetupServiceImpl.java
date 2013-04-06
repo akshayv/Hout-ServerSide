@@ -2,8 +2,9 @@ package com.hout.business.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Set;
 
 import javax.ejb.Stateless;
@@ -44,9 +45,12 @@ public class MeetupServiceImpl implements MeetupService {
         	throw new Exception("Meetup not found. Please check the id");
         }
      
-        meetup.getInviteeStatus().remove(userId);
+        if(!meetup.getInviteeIds().contains(userId)) {
+        	throw new Exception("User not  invited to meetup");
+        }
+        meetup.getRejectedUserIds().add(userId);
         
-        List<Suggestion> suggestions = meetup.getSuggestions();
+        Set<Suggestion> suggestions = meetup.getSuggestions();
         for(Suggestion suggestion :  suggestions) {
         	suggestion.getAcceptedUserIds().remove(userId);
         	suggestion.getRejectedUserIds().remove(userId);
@@ -56,7 +60,7 @@ public class MeetupServiceImpl implements MeetupService {
     }
 
 	@Override
-	public void createNew(User user, String description, 
+	public long createNew(User user, String description, 
 			String suggestedLocation,  Date suggestedDate, 
 			Set<Long> contactIds, boolean isFacebookSharing, 
 			boolean isTwitterSharing, boolean isSuggestionsAllowed) {
@@ -66,6 +70,7 @@ public class MeetupServiceImpl implements MeetupService {
 		meetup.setTwitterSharing(isTwitterSharing);
 		meetup.setIsSuggestionsAllowed(isSuggestionsAllowed);
 		meetup.getInviteeIds().addAll(contactIds);
+		meetup.getInviteeIds().add(user.getId());
 		
 		Suggestion suggestion = suggestionService.createNew(user, suggestedLocation, suggestedDate);
 		suggestion.getUndecidedUserIds().addAll(contactIds);
@@ -76,6 +81,7 @@ public class MeetupServiceImpl implements MeetupService {
 		addNew(meetup);
 		
 		notificationService.notify(meetup, "New meetup has been created");
+		return meetup.getId();
 	}
 
 	@Override
@@ -88,9 +94,9 @@ public class MeetupServiceImpl implements MeetupService {
 		}
 		
 		for(Suggestion suggestion : meetup.getSuggestions()) {
-			List<Long> acceptedUserIds = suggestion.getAcceptedUserIds();
-			List<Long> rejectedUserIds = suggestion.getRejectedUserIds();
-			List<Long> KIVUserIds = suggestion.getUndecidedUserIds();
+			Set<Long> acceptedUserIds = suggestion.getAcceptedUserIds();
+			Set<Long> rejectedUserIds = suggestion.getRejectedUserIds();
+			Set<Long> KIVUserIds = suggestion.getUndecidedUserIds();
 			if (acceptedUserIds.size() > rejectedUserIds.size() 
 					+ KIVUserIds.size()) {
 				meetup.setFinalizedDate(suggestion.getDate());
@@ -115,7 +121,7 @@ public class MeetupServiceImpl implements MeetupService {
 		 	throw new Exception("Meetup not found. Please check the id");
 		}
 		
-		ListIterator<Suggestion> suggestionsIterator = meetup.getSuggestions().listIterator();
+		Iterator<Suggestion> suggestionsIterator = meetup.getSuggestions().iterator();
 		List<Suggestion> toBeRemoved = new ArrayList<Suggestion>();
 		while(suggestionsIterator.hasNext()) {
 			Suggestion suggestion = suggestionsIterator.next();
@@ -131,11 +137,15 @@ public class MeetupServiceImpl implements MeetupService {
 	}
 
 	@Override
-	public void addSuggestionToMeetup(long meetupId, long userId,
+	public long addSuggestionToMeetup(long meetupId, long userId,
 			String location, Date date) throws Exception {
 		Meetup meetup = meetupDao.findById(meetupId);
 		if(meetup == null) {
 		 	throw new Exception("Meetup not found. Please check the id");
+		}
+		
+		if(!meetup.getIsSuggestionsAllowed()) {
+			throw new Exception("Suggestions not allowed for meetup");
 		}
 		
 		User user = userDao.findById(userId);
@@ -143,30 +153,68 @@ public class MeetupServiceImpl implements MeetupService {
 		 	throw new Exception("User not found. Please check the id");
 		}
 		
-		List<Suggestion> suggestions = meetup.getSuggestions();
-		List<Suggestion> toBeRemoved = new ArrayList<Suggestion>();
+		Set<Suggestion> suggestions = meetup.getSuggestions();
+		Set<Suggestion> toBeRemoved = new HashSet<Suggestion>();
 		
 		for(Suggestion suggestion : suggestions) {
-			if(suggestion.getSuggestedUserId() == user.getId()) {
+			if(suggestion.getSuggestedUserId() == userId) {
 				toBeRemoved.add(suggestion);
+				break;
 			}
 		}
 		
-		if(!toBeRemoved.isEmpty()) {
-			for(Suggestion remove : toBeRemoved) {
-				suggestions.remove(remove);
-			}
+		for(Suggestion remove : toBeRemoved) {
+			suggestions.remove(remove);
 		}
+		
+		//create the actual  suggestion here
 		
 		Venue venue = venueService.createNew(location);
 		
-		Suggestion suggestion = new Suggestion(user.getId(),venue, date);
+		Suggestion suggestion = new Suggestion(user.getId(), venue, date);
+		suggestion.getUndecidedUserIds().addAll(meetup.getInviteeIds());
+		suggestion.getUndecidedUserIds().remove(userId);
+		suggestion.getAcceptedUserIds().add(userId);
+		
 		suggestions.add(suggestion);
+		
+		checkAndFinalizeDetails(meetupId);
+		return suggestion.getId();
 	}
 
 	@Override
 	public void addNew(Meetup meetup) {
 		meetupDao.save(meetup);
 	}
-	
+
+	@Override
+	public Set<Long> addUsersToMeetup(long userId, long meetupId, Set<Long> inviteeIds) throws Exception {
+		Meetup meetup = meetupDao.findById(meetupId);
+        if(meetup == null) {
+        	throw new Exception("Meetup not found. Please check the id");
+        }
+        if(!meetup.getInviteeIds().contains(userId)) {
+		 	throw new Exception("User does not belong to meetup");
+		}
+        
+        Set<Long> addedUsers = new HashSet<Long>();
+        for(Long inviteeId : inviteeIds) {
+        	if(meetup.getInviteeIds().contains(inviteeId)) {
+        		//throw new Exception("Invitee already belongs to meetup");
+        		continue;
+        	}
+        	User invitee = userDao.findById(inviteeId);
+        	if(invitee == null) {
+        		//throw new Exception("Invitee not found. Please check the id");
+        		continue;
+        	}
+        	meetup.getInviteeIds().add(inviteeId);
+        	addedUsers.add(inviteeId);
+        }
+        for(Suggestion suggestion : meetup.getSuggestions()) {
+    		suggestion.getUndecidedUserIds().addAll(addedUsers);
+    	}
+		checkAndFinalizeDetails(meetupId);
+		return addedUsers;
+	}
 }

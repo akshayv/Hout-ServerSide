@@ -1,9 +1,9 @@
 package com.hout.domain.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -30,13 +30,13 @@ public class Suggestion implements Serializable {
     Date date;
 
     @ElementCollection
-    List<Long> acceptedUserIds = new ArrayList<Long>();
+    Set<Long> acceptedUserIds = new HashSet<Long>();
 
     @ElementCollection
-    List<Long> undecidedUserIds = new ArrayList<Long>();
+    Set<Long> undecidedUserIds = new HashSet<Long>();
 
     @ElementCollection
-    List<Long> rejectedUserIds = new ArrayList<Long>();
+    Set<Long> rejectedUserIds = new HashSet<Long>();
 
     public Suggestion(long suggestedUserId, Venue venue, Date date) {
     	this.suggestedUserId = suggestedUserId;
@@ -63,27 +63,27 @@ public class Suggestion implements Serializable {
         this.date = date;
     }
 
-    public List<Long> getAcceptedUserIds() {
+    public Set<Long> getAcceptedUserIds() {
         return acceptedUserIds;
     }
 
-    public void setAcceptedUserIds(List<Long> acceptedUserIds) {
+    public void setAcceptedUserIds(Set<Long> acceptedUserIds) {
         this.acceptedUserIds = acceptedUserIds;
     }
 
-    public List<Long> getRejectedUserIds() {
+    public Set<Long> getRejectedUserIds() {
         return rejectedUserIds;
     }
 
-    public void setRejectedUserIds(List<Long> rejectedUserIds) {
+    public void setRejectedUserIds(Set<Long> rejectedUserIds) {
         this.rejectedUserIds = rejectedUserIds;
     }
     
-    public List<Long> getUndecidedUserIds() {
+    public Set<Long> getUndecidedUserIds() {
         return undecidedUserIds;
     }
 
-    public void setUndecidedUserIds(List<Long> undecidedUserIds) {
+    public void setUndecidedUserIds(Set<Long> undecidedUserIds) {
         this.undecidedUserIds = undecidedUserIds;
     }
     

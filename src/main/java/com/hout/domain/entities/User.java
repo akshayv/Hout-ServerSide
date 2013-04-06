@@ -1,7 +1,8 @@
 package com.hout.domain.entities;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -30,13 +31,13 @@ public class User implements Serializable {
     String apiKey;
 
     @ElementCollection
-    List<Long> contactIds;
+    Set<Long> contactIds = new HashSet<Long>();
 
     @ElementCollection
-    List<Meetup> currentMeetupIds;
+    Set<Meetup> currentMeetupIds = new HashSet<Meetup>();
 
     @ElementCollection
-    List<Meetup> pastMeetupIds;
+    Set<Meetup> pastMeetupIds = new HashSet<Meetup>();
 
     long contactNumber;
 
@@ -75,27 +76,27 @@ public class User implements Serializable {
         this.apiKey = apiKey;
     }
 
-    public List<java.lang.Long> getContactIds() {
+    public Set<java.lang.Long> getContactIds() {
         return contactIds;
     }
 
-    public void setContactIds(List<java.lang.Long> contactIds) {
+    public void setContactIds(Set<java.lang.Long> contactIds) {
         this.contactIds = contactIds;
     }
 
-    public List<Meetup> getCurrentMeetupIds() {
+    public Set<Meetup> getCurrentMeetupIds() {
         return currentMeetupIds;
     }
 
-    public void setCurrentMeetupIds(List<Meetup> currentMeetupIds) {
+    public void setCurrentMeetupIds(Set<Meetup> currentMeetupIds) {
         this.currentMeetupIds = currentMeetupIds;
     }
 
-    public List<Meetup> getPastMeetupIds() {
+    public Set<Meetup> getPastMeetupIds() {
         return pastMeetupIds;
     }
 
-    public void setPastMeetupIds(List<Meetup> pastMeetupIds) {
+    public void setPastMeetupIds(Set<Meetup> pastMeetupIds) {
         this.pastMeetupIds = pastMeetupIds;
     }
 

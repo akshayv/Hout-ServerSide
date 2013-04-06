@@ -1,7 +1,6 @@
 package com.hout.client.impl;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import javax.ejb.Stateless;
@@ -14,11 +13,8 @@ import com.hout.business.VenueService;
 import com.hout.business.dao.MeetupDao;
 import com.hout.business.dao.SuggestionDao;
 import com.hout.client.ClientApi;
-import com.hout.domain.entities.Meetup;
-import com.hout.domain.entities.Suggestion;
 import com.hout.domain.entities.SuggestionStatus;
 import com.hout.domain.entities.User;
-import com.hout.domain.entities.Venue;
 
 @Stateless
 public class ClientApiImpl implements ClientApi {
@@ -44,13 +40,13 @@ public class ClientApiImpl implements ClientApi {
 	User currentUser = null;
 		
 	@Override
-	public void createNewMeetup(long userId, String apiKey, String description, String suggestedLocation,
+	public long createNewMeetup(long userId, String apiKey, String description, String suggestedLocation,
 			Date suggestedDate, Set<Long> contactIds,
 			boolean isFacebookSharing, boolean isTwitterSharing, 
 			boolean isSuggestionsAllowed) throws Exception {
 		checkApiKey(userId, apiKey);
 		
-		meetupService.createNew(currentUser, description, suggestedLocation, 
+		return meetupService.createNew(currentUser, description, suggestedLocation, 
 				suggestedDate, contactIds, isFacebookSharing, isTwitterSharing, 
 				isSuggestionsAllowed);
 	}
@@ -64,11 +60,11 @@ public class ClientApiImpl implements ClientApi {
 	}
 
 	@Override
-	public void createNewUser(String name, String profilePictureLocation,
-			String apiKey, List<Long> contacts) {
+	public long createNewUser(String name, String profilePictureLocation,
+			String apiKey, Set<Long> contacts) {
 			User user = userService.createNewUser(name, profilePictureLocation,
 					apiKey, contacts);
-			userService.addNewUser(user);
+			return userService.addNewUser(user);
 		}
 
 	@Override
@@ -81,24 +77,21 @@ public class ClientApiImpl implements ClientApi {
 	}
 
 	@Override
-	public void addNewSuggestion(long userId, String apiKey, long meetupId, String suggestedPlace, Date suggestedTime) throws Exception{
+	public long addNewSuggestion(long userId, String apiKey, long meetupId, String suggestedPlace, Date suggestedTime) throws Exception{
 		checkApiKey(userId, apiKey);
-		Meetup meetup = meetupDao.findById(meetupId);
-		Venue venue = venueService.createNew(suggestedPlace); 
-		Suggestion suggestion = new Suggestion(currentUser.getId(), venue, suggestedTime);
-		meetup.addSuggestions(suggestion);
-		RSVPToSuggestion(userId, apiKey, meetupId, suggestion.getId(), SuggestionStatus.YES);
+		return meetupService.addSuggestionToMeetup(meetupId, userId, suggestedPlace, suggestedTime);
 	}
 
 	@Override
-	public List<Suggestion> getSuggestionsForMeetup(long userId, String apiKey, long meetupId) throws Exception{
+	public Set<Long> addInviteesToMeetup(long userId, String apiKey, Set<Long> inviteeId,
+			long meetupId) throws Exception {
 		checkApiKey(userId, apiKey);
-		Meetup meetup = meetupDao.findById(meetupId);
-		return meetup.getSuggestions();
+		return meetupService.addUsersToMeetup(userId, meetupId, inviteeId);
 	}
 
 	@Override
-	public Meetup findMeetupById(long userId, String apiKey, long meetupId) {
-		return meetupDao.findById(meetupId);
+	public void declineMeetup(long userId, String apiKey, long meetupId) throws Exception {
+		checkApiKey(userId, apiKey);
+		meetupService.removeInvitee(meetupId, userId);
 	}
 }

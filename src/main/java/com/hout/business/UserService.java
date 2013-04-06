@@ -1,12 +1,12 @@
 package com.hout.business;
 
-import java.util.List;
+import java.util.Set;
 
 import com.hout.domain.entities.User;
 
 public interface UserService {
 
-    public void addNewUser(User user);
+    public long addNewUser(User user);
 
     public void removeUser(User user);
 
@@ -15,7 +15,7 @@ public interface UserService {
     public User findById(Long id);
     
     public User createNewUser(String name, String profilePictureLocation,
-			String apiKey, List<Long> contacts);
+			String apiKey, Set<Long> contacts);
 
 	public User findCurrentUser(); 
 	

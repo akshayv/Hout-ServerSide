@@ -1,6 +1,6 @@
 package com.hout.business.impl;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -16,8 +16,9 @@ public class UserServiceImpl implements UserService{
     UserDao userDao;
 
 	@Override
-    public void addNewUser(User user) {
+    public long addNewUser(User user) {
         userDao.save(user);
+        return user.getId();
     }
 
     @Override
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public User createNewUser(String name, 
     		String profilePictureLocation, String apiKey,
-			List<Long> contacts) {
+			Set<Long> contacts) {
     	User user = new User();
 		user.setName(name);
 		user.setProfilePictureLocation(profilePictureLocation);
