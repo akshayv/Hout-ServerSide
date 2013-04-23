@@ -70,21 +70,34 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 		   throw new HoutException("No Invitees specified");
 	   }
 	   
-	   Date date;
+	   Date date = null;
+	   if(suggestedDate !=null && !suggestedDate.trim().isEmpty())
 	   try {	
 		   DateFormat df= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
 		   date = df.parse(suggestedDate);
 	   } catch (Exception e) {
 		   throw new HoutException("Unparsable Date");
 	   }
+	   
 	   HoutMeetupResponse houtMeetupResponse = new HoutMeetupResponse();
 	   try {
-		   long meetupId = clientApi.createNewMeetup(userId, apiKey, description, suggestedLocation,
-				   date, inviteeIds, isFacebookSharing,
+		   long meetupId = clientApi.createNewMeetup(userId, apiKey, description
+				   , inviteeIds, isFacebookSharing,
 				   isTwitterSharing, isSuggestionsAllowed);
 		   houtMeetupResponse.setMeetupId(meetupId);
 	   } catch(Exception e) {
 		   throw new HoutException(e.getMessage());
+	   }
+	   
+	   if(date != null || (suggestedLocation != null && !suggestedLocation.isEmpty())) {
+		   try {
+			houtMeetupResponse.setSuggestionId(clientApi.
+					   addNewSuggestion(userId, apiKey, 
+							   houtMeetupResponse.getMeetupId(), 
+							   suggestedLocation, date));
+		} catch (Exception e) {
+			   throw new HoutException(e.getMessage());
+		}
 	   }
 	   houtMeetupResponse.setStatus(Status.SUCCESS);
 	   return houtMeetupResponse;

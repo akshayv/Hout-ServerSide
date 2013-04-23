@@ -12,6 +12,9 @@ public class HoutMeetupResponse {
 	@XmlElement
 	Long meetupId;
 	
+	@XmlElement
+	Long suggestionId;
+	
 	public HoutMeetupResponse() {
 	}
 	
@@ -29,5 +32,13 @@ public class HoutMeetupResponse {
 	
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+	
+	public Long getSuggestionId() {
+		return suggestionId;
+	}
+	
+	public void setSuggestionId(Long suggestionId) {
+		this.suggestionId = suggestionId;
 	}
 }

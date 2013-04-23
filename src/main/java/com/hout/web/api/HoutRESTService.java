@@ -4,7 +4,7 @@ package com.hout.web.api;
 import java.util.Set;
 
 import javax.enterprise.context.RequestScoped;
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -27,14 +27,14 @@ import com.hout.web.api.marshaller.format.Status;
 @Path("/hout")
 public interface HoutRESTService {
    
-   @GET
+   @POST
    @Path("/createUser")
    @Produces("application/json")
    public HoutUserResponse createUser(@QueryParam("name") String name,
 		   @QueryParam("profilePictureLocation") String profilePictureLocation, 
 		   @QueryParam("apiKey") String apiKey) throws HoutException;
     
-   @GET
+   @POST
    @Path("/createMeetup")
    @Produces("application/json")
    public HoutMeetupResponse createMeetup(@QueryParam("userId") long userId, 
@@ -47,7 +47,7 @@ public interface HoutRESTService {
 		   @QueryParam("isSuggestionsAllowed") boolean isSuggestionsAllowed, 
 		   @QueryParam("inviteeIds") Set<Long> inviteeIds) throws HoutException;
    
-   @GET
+   @POST
    @Path("/addSuggestion")
    @Produces("application/json")
    public HoutSuggestionResponse addSuggestion(@QueryParam("userId") long userId, 
@@ -56,7 +56,7 @@ public interface HoutRESTService {
 		   @QueryParam("suggestedLocation") String suggestedLocation,
 		   @QueryParam("suggestedDate")  String suggestedDate) throws HoutException;
    
-   @GET
+   @POST
    @Path("/RSVP")
    @Produces("application/json")
    public Status RSVPToSuggestion(@QueryParam("userId") long userId, 
@@ -65,7 +65,7 @@ public interface HoutRESTService {
 		   @QueryParam("suggestionId")long suggestionId,
 		   @QueryParam("status")SuggestionStatus status) throws HoutException;
 
-   @GET
+   @POST
    @Path("/addInvitee")
    @Produces("application/json")
    public HoutAdditionalInviteesResponse addInviteesToMeetup(@QueryParam("userId")long userId,
@@ -73,7 +73,7 @@ public interface HoutRESTService {
 		   @QueryParam("inviteeIds")Set<Long> inviteeIds,
 		   @QueryParam("meetupId")long meetupId) throws HoutException;
    
-   @GET
+   @POST
    @Path("/declineMeetup")
    @Produces("application/json")
    public Status declineMeetup(@QueryParam("userId")long userId,

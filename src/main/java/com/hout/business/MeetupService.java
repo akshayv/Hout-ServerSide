@@ -13,7 +13,6 @@ public interface MeetupService {
     public void removeInvitee(long meetupId, long userId) throws Exception;
     
     public long createNew(User user, String description, 
-    		String suggestedLocation, Date suggestedDate, 
     		Set<Long> contactIds, boolean isFacebookSharing, 
     		boolean isTwitterSharing, boolean isSuggestionsAllowed);
     

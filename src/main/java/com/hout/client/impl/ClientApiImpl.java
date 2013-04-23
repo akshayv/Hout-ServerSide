@@ -40,14 +40,14 @@ public class ClientApiImpl implements ClientApi {
 	User currentUser = null;
 		
 	@Override
-	public long createNewMeetup(long userId, String apiKey, String description, String suggestedLocation,
-			Date suggestedDate, Set<Long> contactIds,
+	public long createNewMeetup(long userId, String apiKey, String description,
+			Set<Long> contactIds,
 			boolean isFacebookSharing, boolean isTwitterSharing, 
 			boolean isSuggestionsAllowed) throws Exception {
 		checkApiKey(userId, apiKey);
 		
-		return meetupService.createNew(currentUser, description, suggestedLocation, 
-				suggestedDate, contactIds, isFacebookSharing, isTwitterSharing, 
+		return meetupService.createNew(currentUser, description,
+				contactIds, isFacebookSharing, isTwitterSharing, 
 				isSuggestionsAllowed);
 	}
 

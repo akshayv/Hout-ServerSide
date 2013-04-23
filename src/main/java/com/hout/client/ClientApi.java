@@ -8,7 +8,7 @@ import com.hout.domain.entities.SuggestionStatus;
 
 public interface ClientApi {
 
-    public long createNewMeetup(long userId, String apiKey, String description, String suggestedLocation, Date suggestedDate, Set<Long> contactIds,
+    public long createNewMeetup(long userId, String apiKey, String description, Set<Long> contactIds,
                                 boolean isFacebookSharing, boolean isTwitterSharing, boolean isSuggestionsAllowed) throws Exception;
 
     public long createNewUser(String name, String profilePictureLocation, String apiKey, Set<Long> contacts) throws Exception;

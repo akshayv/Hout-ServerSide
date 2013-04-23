@@ -61,7 +61,6 @@ public class MeetupServiceImpl implements MeetupService {
 
 	@Override
 	public long createNew(User user, String description, 
-			String suggestedLocation,  Date suggestedDate, 
 			Set<Long> contactIds, boolean isFacebookSharing, 
 			boolean isTwitterSharing, boolean isSuggestionsAllowed) {
 		Meetup meetup = new Meetup();
@@ -71,12 +70,6 @@ public class MeetupServiceImpl implements MeetupService {
 		meetup.setIsSuggestionsAllowed(isSuggestionsAllowed);
 		meetup.getInviteeIds().addAll(contactIds);
 		meetup.getInviteeIds().add(user.getId());
-		
-		Suggestion suggestion = suggestionService.createNew(user, suggestedLocation, suggestedDate);
-		suggestion.getUndecidedUserIds().addAll(contactIds);
-		suggestion.getAcceptedUserIds().add(user.getId());
-		
-		meetup.addSuggestions(suggestion);
 		
 		addNew(meetup);
 		
