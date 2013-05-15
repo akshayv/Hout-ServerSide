@@ -2,8 +2,10 @@ package com.hout.client;
 
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
+import com.hout.domain.entities.Notification;
 import com.hout.domain.entities.SuggestionStatus;
 
 public interface ClientApi {
@@ -20,4 +22,8 @@ public interface ClientApi {
     public Set<Long> addInviteesToMeetup(long userId, String apiKey, Set<Long> inviteeIds, long meetupId) throws Exception;
     
     public void declineMeetup(long userId, String apiKey, long meetupId) throws Exception;
+
+	public List<Notification> getNotificationsForUser(long userId, String apiKey) throws Exception;
+
+	public void deleteNotifications(List<Notification> notifications);
 }

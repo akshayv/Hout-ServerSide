@@ -1,18 +1,21 @@
 package com.hout.client.impl;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import com.hout.business.MeetupService;
+import com.hout.business.NotificationService;
 import com.hout.business.SuggestionService;
 import com.hout.business.UserService;
 import com.hout.business.VenueService;
 import com.hout.business.dao.MeetupDao;
 import com.hout.business.dao.SuggestionDao;
 import com.hout.client.ClientApi;
+import com.hout.domain.entities.Notification;
 import com.hout.domain.entities.SuggestionStatus;
 import com.hout.domain.entities.User;
 
@@ -36,6 +39,9 @@ public class ClientApiImpl implements ClientApi {
 	
 	@Inject
 	private VenueService venueService;
+
+	@Inject
+	private NotificationService notificationService;
 	
 	User currentUser = null;
 		
@@ -93,5 +99,16 @@ public class ClientApiImpl implements ClientApi {
 	public void declineMeetup(long userId, String apiKey, long meetupId) throws Exception {
 		checkApiKey(userId, apiKey);
 		meetupService.removeInvitee(meetupId, userId);
+	}
+
+	@Override
+	public List<Notification> getNotificationsForUser(long userId, String apiKey) throws Exception {
+		checkApiKey(userId, apiKey);
+		return notificationService.getNewNotificationsForUser(currentUser);
+	}
+	
+	@Override
+	public void deleteNotifications(List<Notification> notifications) {
+		notificationService.deleteList(notifications);
 	}
 }

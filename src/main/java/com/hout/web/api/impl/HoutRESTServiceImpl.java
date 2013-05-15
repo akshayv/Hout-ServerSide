@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -19,6 +20,8 @@ import com.hout.web.api.marshaller.format.HoutException;
 import com.hout.web.api.marshaller.format.HoutMeetupResponse;
 import com.hout.web.api.marshaller.format.HoutSuggestionResponse;
 import com.hout.web.api.marshaller.format.HoutUserResponse;
+import com.hout.web.api.marshaller.format.Notification;
+import com.hout.web.api.marshaller.format.NotificationResponse;
 import com.hout.web.api.marshaller.format.Status;
 
 public class HoutRESTServiceImpl implements HoutRESTService {
@@ -136,11 +139,11 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 	   return houtSuggestionResponse;
    }
    
-   public Status RSVPToSuggestion(@QueryParam("userId") long userId, 
-		   @QueryParam("apiKey") String apiKey,
-		   @QueryParam("meetupId")long meetupId,
-		   @QueryParam("suggestionId")long suggestionId,
-		   @QueryParam("status")SuggestionStatus status) throws HoutException {
+   public Status RSVPToSuggestion(long userId, 
+		   String apiKey,
+		   long meetupId,
+		   long suggestionId,
+		   SuggestionStatus status) throws HoutException {
 		
 	   if(userId == 0) {
 		   throw new HoutException("userId not specified");
@@ -170,10 +173,10 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 	   return Status.SUCCESS;
    }
 
-   public HoutAdditionalInviteesResponse addInviteesToMeetup(@QueryParam("userId")long userId,
-		   @QueryParam("apiKey")String apiKey,
-		   @QueryParam("inviteeIds")Set<Long> inviteeIds,
-		   @QueryParam("meetupId")long meetupId) throws HoutException {
+   public HoutAdditionalInviteesResponse addInviteesToMeetup(long userId,
+		   String apiKey,
+		   Set<Long> inviteeIds,
+		   long meetupId) throws HoutException {
 	   if(userId == 0) {
 		   throw new HoutException("userId not specified");
 	   }
@@ -219,4 +222,23 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 	   }
 	   return Status.SUCCESS;
    }
+
+    public NotificationResponse getNotifications(long userId,
+	    	String apiKey) throws HoutException {
+    	List<com.hout.domain.entities.Notification> notifications;
+    	try { 
+ 		   notifications = clientApi.getNotificationsForUser(userId, apiKey);
+ 	   } catch(Exception e) {
+ 		   throw new HoutException(e.getMessage());
+ 	   } 
+	    NotificationResponse response = new NotificationResponse();
+	    for(com.hout.domain.entities.Notification  notification : notifications) {
+		    response.getNotifications().add(new Notification(notification.getMessage()));
+	    }
+	    response.setUserId(userId);
+	    
+	    clientApi.deleteNotifications(notifications);
+	    
+	    return response;
+    }
 }
