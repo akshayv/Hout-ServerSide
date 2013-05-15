@@ -20,7 +20,6 @@ import com.hout.business.dao.UserDao;
 import com.hout.domain.entities.Meetup;
 import com.hout.domain.entities.Suggestion;
 import com.hout.domain.entities.User;
-import com.hout.domain.entities.Venue;
 
 @Stateless
 public class MeetupServiceImpl implements MeetupService {
@@ -41,7 +40,7 @@ public class MeetupServiceImpl implements MeetupService {
 	
 	@Inject
 	private UserService userService;
-    
+
 	@Override
     public void removeInvitee(long meetupId, long userId) throws Exception {
         Meetup meetup = meetupDao.findById(meetupId);
@@ -182,9 +181,7 @@ public class MeetupServiceImpl implements MeetupService {
 		
 		//create the actual  suggestion here
 		
-		Venue venue = venueService.createNew(location);
-		
-		Suggestion suggestion = new Suggestion(user.getId(), venue, date);
+		Suggestion suggestion = suggestionService.createNew(user, location, date);
 		suggestion.getUndecidedUserIds().addAll(meetup.getInviteeIds());
 		suggestion.getUndecidedUserIds().remove(userId);
 		suggestion.getAcceptedUserIds().add(userId);
