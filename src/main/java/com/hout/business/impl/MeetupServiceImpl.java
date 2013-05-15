@@ -191,6 +191,10 @@ public class MeetupServiceImpl implements MeetupService {
 		
 		suggestions.add(suggestion);
 		
+		for(Long inviteeId : meetup.getInviteeIds()) {
+			notificationService.notify(new Object(), "New Suggestion for Meetup", inviteeId);
+		}
+		
 		checkAndFinalizeDetails(meetupId);
 		return suggestion.getId();
 	}
