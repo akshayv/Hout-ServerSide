@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import com.hout.business.MeetupService;
 import com.hout.business.NotificationService;
 import com.hout.business.SuggestionService;
+import com.hout.business.UserService;
 import com.hout.business.VenueService;
 import com.hout.business.dao.MeetupDao;
 import com.hout.business.dao.UserDao;
@@ -37,6 +38,9 @@ public class MeetupServiceImpl implements MeetupService {
 	
 	@Inject
     private VenueService venueService;
+	
+	@Inject
+	private UserService userService;
     
 	@Override
     public void removeInvitee(long meetupId, long userId) throws Exception {
@@ -68,13 +72,26 @@ public class MeetupServiceImpl implements MeetupService {
 		meetup.setFacebookSharing(isFacebookSharing);
 		meetup.setTwitterSharing(isTwitterSharing);
 		meetup.setIsSuggestionsAllowed(isSuggestionsAllowed);
+		contactIds = confirmPresence(contactIds);
 		meetup.getInviteeIds().addAll(contactIds);
 		meetup.getInviteeIds().add(user.getId());
 		
 		addNew(meetup);
 		
-		notificationService.notify(meetup, "New meetup has been created");
+		for(Long contactId : contactIds ) {
+			notificationService.notify(meetup, "New meetup has been created", contactId);
+		}
 		return meetup.getId();
+	}
+
+	private Set<Long> confirmPresence(Set<Long> contactIds) {
+		Set<Long> confirmedUsers = new HashSet<Long>();
+		for (Long contactId : contactIds) {
+			if(userService.findById(contactId) != null) {
+				confirmedUsers.add(contactId);
+			}
+		}
+		return confirmedUsers;
 	}
 
 	@Override
@@ -97,7 +114,10 @@ public class MeetupServiceImpl implements MeetupService {
 				
 				hasBeenFinalized = true;
 				
-				notificationService.notify(meetup, "Details for meetup have been finalized");
+				for(Long userId : meetup.getInviteeIds()) {
+					notificationService.notify(meetup, "Details for meetup have been finalized", userId);
+				}
+				
 				break;
 			}
 		}

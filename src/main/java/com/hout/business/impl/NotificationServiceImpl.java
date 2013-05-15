@@ -19,8 +19,11 @@ public class NotificationServiceImpl implements NotificationService {
 	
 
 	@Override
-	public void notify(Object o, String message) {
-		// TODO Auto-generated method stub
+	public void notify(Object o, String message, Long userId) {
+		Notification notification = new Notification();
+		notification.setMessage(message);
+		notification.setUserId(userId);
+		notificationDao.persist(notification);
 
 	}
 
