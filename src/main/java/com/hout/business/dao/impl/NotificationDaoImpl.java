@@ -31,7 +31,7 @@ public class NotificationDaoImpl extends  GenericDaoImpl<Notification, Integer> 
 	@Override
 	public List<Notification> getNewNotificationsForUser(User user) {
 		Query q = em.createQuery("select n from Notification n where n.userId=:userId");
-		q.setParameter("id", user.getId());
+		q.setParameter("userId", user.getId());
 		try {
 			return (List<Notification>) q.getResultList();
 		} catch (Exception e) {
