@@ -1,5 +1,6 @@
 package com.hout.client.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -15,7 +16,9 @@ import com.hout.business.VenueService;
 import com.hout.business.dao.MeetupDao;
 import com.hout.business.dao.SuggestionDao;
 import com.hout.client.ClientApi;
+import com.hout.domain.entities.Meetup;
 import com.hout.domain.entities.Notification;
+import com.hout.domain.entities.Suggestion;
 import com.hout.domain.entities.SuggestionStatus;
 import com.hout.domain.entities.User;
 
@@ -67,9 +70,9 @@ public class ClientApiImpl implements ClientApi {
 
 	@Override
 	public long createNewUser(String name, String profilePictureLocation,
-			String apiKey, Set<Long> contacts) {
+			String apiKey, Set<Long> contacts, long contactNumber) {
 			User user = userService.createNewUser(name, profilePictureLocation,
-					apiKey, contacts);
+					apiKey, contacts, contactNumber);
 			return userService.addNewUser(user);
 		}
 
@@ -110,5 +113,36 @@ public class ClientApiImpl implements ClientApi {
 	@Override
 	public void deleteNotifications(List<Notification> notifications) {
 		notificationService.deleteList(notifications);
+	}
+
+	@Override
+	public List<Meetup> getMeetupsForDateRange(long userId, String apiKey,
+			Date fromDate, Date toDate) throws Exception {
+		if(fromDate.after(toDate)) {
+			throw new Exception("From Date cannot be after ToDate");
+		}
+		checkApiKey(userId, apiKey);
+		List<Meetup> userMeetups = new ArrayList<Meetup>();
+		List<Meetup> meetups = meetupDao.findForDateRange(fromDate, toDate);
+		for(Meetup meetup : meetups) {
+			if(meetup.getInviteeIds().contains(userId)) {
+				userMeetups.add(meetup);
+			}
+		}
+		return userMeetups;
+	}
+
+	@Override
+	public List<Suggestion> getSuggestionsForMeetup(long userId, String apiKey,
+			long meetupId) throws Exception {
+		checkApiKey(userId, apiKey);
+		List<Suggestion> suggestions = new ArrayList<Suggestion>();
+		suggestions.addAll(meetupDao.findById(meetupId).getSuggestions());
+		return suggestions;
+	}
+
+	@Override
+	public User getUserDetails(long userId) {
+		return userService.findById(userId);
 	}
 }

@@ -50,6 +50,8 @@ public class Meetup implements Serializable {
     @NotNull
     boolean isSuggestionsAllowed;
 
+    Date createdDate = new Date();
+    
     public Meetup()  {
 
     }
@@ -146,5 +148,13 @@ public class Meetup implements Serializable {
     public void setInviteeIds(Set<Long> inviteeIds) {
         this.inviteeIds = inviteeIds;
     }
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 
 }

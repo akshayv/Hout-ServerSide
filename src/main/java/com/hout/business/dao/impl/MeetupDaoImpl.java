@@ -1,5 +1,8 @@
 package com.hout.business.dao.impl;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -51,4 +54,17 @@ public class MeetupDaoImpl extends GenericDaoImpl<Meetup, Integer> implements Me
     protected void setEntityManager(EntityManager entityManager) {
         em = entityManager;
     }
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Meetup> findForDateRange(Date fromDate, Date toDate) {
+		Query q = em.createQuery("select m from Meetup m where m.createdDate>=:fromDate and m.createdDate<:toDate");
+		q.setParameter("fromDate", fromDate);
+		q.setParameter("toDate", toDate);
+		try {
+			return (List<Meetup>) q.getResultList();
+		} catch (Exception e) {
+			return null;
+		}
+	}
 }

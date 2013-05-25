@@ -15,7 +15,7 @@ public interface UserService {
     public User findById(Long id);
     
     public User createNewUser(String name, String profilePictureLocation,
-			String apiKey, Set<Long> contacts);
+			String apiKey, Set<Long> contacts, long contactNumber);
 
 	public User findCurrentUser(); 
 	

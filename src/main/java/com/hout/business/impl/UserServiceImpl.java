@@ -39,12 +39,13 @@ public class UserServiceImpl implements UserService{
     @Override
     public User createNewUser(String name, 
     		String profilePictureLocation, String apiKey,
-			Set<Long> contacts) {
+			Set<Long> contacts, long contactNumber) {
     	User user = new User();
 		user.setName(name);
 		user.setProfilePictureLocation(profilePictureLocation);
 		user.setApiKey(apiKey);
 		user.setContactIds(contacts);
+		user.setContactNumber(contactNumber);
 		return user;	
     }
 

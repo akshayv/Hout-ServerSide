@@ -13,7 +13,10 @@ import com.hout.web.api.marshaller.format.HoutAdditionalInviteesResponse;
 import com.hout.web.api.marshaller.format.HoutException;
 import com.hout.web.api.marshaller.format.HoutMeetupResponse;
 import com.hout.web.api.marshaller.format.HoutSuggestionResponse;
+import com.hout.web.api.marshaller.format.HoutUserCreationResponse;
 import com.hout.web.api.marshaller.format.HoutUserResponse;
+import com.hout.web.api.marshaller.format.MeetupRetrievalResponse;
+import com.hout.web.api.marshaller.format.MeetupSuggestionResponse;
 import com.hout.web.api.marshaller.format.NotificationResponse;
 import com.hout.web.api.marshaller.format.Status;
 
@@ -30,10 +33,11 @@ public interface HoutRESTService {
 	@GET
 	@Path("/createUser")
 	@Produces("application/json")
-	public HoutUserResponse createUser(
+	public HoutUserCreationResponse createUser(
 			@QueryParam("name") String name,
 			@QueryParam("profilePictureLocation") String profilePictureLocation,
-			@QueryParam("apiKey") String apiKey) throws HoutException;
+			@QueryParam("apiKey") String apiKey, 
+			@QueryParam("contactNumber") long contactNumber) throws HoutException;
 
 	@GET
 	@Path("/createMeetup")
@@ -47,7 +51,7 @@ public interface HoutRESTService {
 			@QueryParam("isTwitterSharing") boolean isTwitterSharing,
 			@QueryParam("isSuggestionsAllowed") boolean isSuggestionsAllowed,
 			@QueryParam("inviteeIds") Set<Long> inviteeIds)
-			throws HoutException;
+					throws HoutException;
 
 	@GET
 	@Path("/addSuggestion")
@@ -58,7 +62,7 @@ public interface HoutRESTService {
 			@QueryParam("meetupId") long meetupId,
 			@QueryParam("suggestedLocation") String suggestedLocation,
 			@QueryParam("suggestedDate") String suggestedDate)
-			throws HoutException;
+					throws HoutException;
 
 	@GET
 	@Path("/RSVP")
@@ -84,10 +88,31 @@ public interface HoutRESTService {
 	public Status declineMeetup(@QueryParam("userId") long userId,
 			@QueryParam("apiKey") String apiKey,
 			@QueryParam("meetupId") long meetupId) throws HoutException;
-	
+
 	@GET
 	@Path("/getNotifications")
 	@Produces("application/json")
 	public NotificationResponse getNotifications(@QueryParam("userId") long userId, 
 			@QueryParam("apiKey") String apiKey) throws HoutException;
+
+	@GET
+	@Path("/getMeetups")
+	@Produces("application/json")
+	public MeetupRetrievalResponse getMeetupsForDateRange(@QueryParam("userId") long userId, 
+			@QueryParam("apiKey") String apiKey, @QueryParam("fromDate") String fromDate, 
+			@QueryParam("toDate")String toDate) throws Exception;
+
+	@GET
+	@Path("/findSuggestions")
+	@Produces("application/json")
+	public MeetupSuggestionResponse getSuggestionsForMeetup(
+			@QueryParam("userId") long userId,
+			@QueryParam("apiKey") String apiKey,
+			@QueryParam("meetupId") long meetupId) throws Exception;
+	
+	@GET
+	@Path("/getUserDetails")
+	@Produces("application/json")
+	public HoutUserResponse getUserDetails(@QueryParam("userId") long userId) throws Exception;
+	
 }
