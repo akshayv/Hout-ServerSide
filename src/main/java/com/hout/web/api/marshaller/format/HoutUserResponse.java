@@ -1,15 +1,23 @@
 package com.hout.web.api.marshaller.format;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import com.hout.domain.entities.User;
 
+@XmlRootElement
 public class HoutUserResponse {
+	@XmlElement
 	long id;
 
-    String name;
+	@XmlElement
+	String name;
     
-    String apiKey;
+	@XmlElement
+	String apiKey;
 
-    long contactNumber;
+	@XmlElement
+	long contactNumber;
 
     public HoutUserResponse() {
     }

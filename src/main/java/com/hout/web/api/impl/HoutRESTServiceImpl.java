@@ -275,7 +275,8 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 		for(com.hout.domain.entities.Meetup  meetup : meetups) {
 			response.getMeetups().add(new Meetup(meetup.getId(), meetup.getCreatedDate(),
 					meetup.getFinalizedDate(), new Venue(meetup.getFinalizedLocation()),
-					meetup.getDescription()));
+					meetup.getDescription(), meetup.getIsSuggestionsAllowed(),
+					meetup.isTwitterSharing(), meetup.isFacebookSharing()));
 		}
 		response.setFromDate(parsedFromDate);
 		response.setToDate(parsedToDate);
