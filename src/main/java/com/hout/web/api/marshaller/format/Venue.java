@@ -9,9 +9,11 @@ public class Venue {
     
 
 	public Venue(com.hout.domain.entities.Venue venue) {
-		this.id = venue.getId();
-		this.location = venue.getLocation();
-		this.address = venue.getAddress();
+		if(venue != null) {
+			this.id = venue.getId();
+			this.location = venue.getLocation();
+			this.address = venue.getAddress();
+		}
 	}
     
     public Venue(String location) {
