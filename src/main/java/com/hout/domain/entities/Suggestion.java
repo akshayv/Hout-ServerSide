@@ -7,9 +7,11 @@ import java.util.Set;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -30,12 +32,15 @@ public class Suggestion implements Serializable {
     Date date;
 
     @ElementCollection
+    @OneToMany(cascade={}, fetch=FetchType.EAGER)
     Set<Long> acceptedUserIds = new HashSet<Long>();
 
     @ElementCollection
+    @OneToMany(cascade={}, fetch=FetchType.EAGER)
     Set<Long> undecidedUserIds = new HashSet<Long>();
 
     @ElementCollection
+    @OneToMany(cascade={}, fetch=FetchType.EAGER)
     Set<Long> rejectedUserIds = new HashSet<Long>();
 
     public Suggestion(long suggestedUserId, Venue venue, Date date) {
