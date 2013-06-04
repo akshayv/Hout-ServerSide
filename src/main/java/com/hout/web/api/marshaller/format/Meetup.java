@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlRootElement
 public class Meetup {
@@ -14,12 +15,14 @@ public class Meetup {
 	@XmlElement
     String description;
 
+	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	@XmlElement
 	Date createdDate;
 
 	@XmlElement
 	Venue finalizedLocation;
 
+	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	@XmlElement
 	Date finalizedDate;
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlRootElement
 public class MeetupRetrievalResponse {
@@ -13,9 +14,11 @@ public class MeetupRetrievalResponse {
 	@XmlElement
 	List<Meetup> meetups = new ArrayList<Meetup>();
 	
+	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	@XmlElement
 	Date fromDate;
 	
+	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	@XmlElement
 	Date toDate;
 
