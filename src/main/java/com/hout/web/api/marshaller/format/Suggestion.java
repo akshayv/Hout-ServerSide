@@ -22,7 +22,6 @@ public class Suggestion {
 	@XmlElement
 	Venue venue;
 
-	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	@XmlElement
 	Date date;
 
@@ -63,7 +62,8 @@ public class Suggestion {
         this.venue = venue;
     }
 
-    public Date getDate() {
+    @XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
+	public Date getDate() {
         return date;
     }
 

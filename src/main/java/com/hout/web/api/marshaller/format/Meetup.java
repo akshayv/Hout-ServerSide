@@ -15,7 +15,6 @@ public class Meetup {
 	@XmlElement
     String description;
 
-	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	@XmlElement
 	Date createdDate;
 
@@ -23,7 +22,6 @@ public class Meetup {
 	Venue finalizedLocation;
 
 	@XmlElement
-	@XmlJavaTypeAdapter(JaxbDateAdapter.class)
 	Date finalizedDate;
 
 	@XmlElement
@@ -69,6 +67,7 @@ public class Meetup {
 		this.description = description;
 	}
 
+	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -85,6 +84,7 @@ public class Meetup {
 		this.finalizedLocation = finalizedLocation;
 	}
 
+	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	public Date getFinalizedDate() {
 		return finalizedDate;
 	}

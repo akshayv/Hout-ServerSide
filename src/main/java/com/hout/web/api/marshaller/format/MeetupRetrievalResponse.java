@@ -14,11 +14,9 @@ public class MeetupRetrievalResponse {
 	@XmlElement
 	List<Meetup> meetups = new ArrayList<Meetup>();
 	
-	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	@XmlElement
 	Date fromDate;
 	
-	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	@XmlElement
 	Date toDate;
 
@@ -42,6 +40,7 @@ public class MeetupRetrievalResponse {
 		this.meetups = meetups;
 	}
 
+	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	public Date getFromDate() {
 		return fromDate;
 	}
@@ -50,6 +49,7 @@ public class MeetupRetrievalResponse {
 		this.fromDate = fromDate;
 	}
 
+	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	public Date getToDate() {
 		return toDate;
 	}
