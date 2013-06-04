@@ -61,7 +61,7 @@ public class SuggestionServiceImpl implements SuggestionService {
 	}
 
 	@Override
-	public void remove(long id) {
+	public void remove(Long id) {
 		suggestionDao.removeById(id);
 	}	
 }

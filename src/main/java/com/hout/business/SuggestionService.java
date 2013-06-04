@@ -12,6 +12,6 @@ public interface SuggestionService {
 	
 	public void RSVP(User user, long suggestionId, SuggestionStatus status) throws Exception;
 	
-	public void remove(long id);
+	public void remove(Long id);
 
 }

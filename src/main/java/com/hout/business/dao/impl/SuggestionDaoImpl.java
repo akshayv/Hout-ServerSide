@@ -10,7 +10,7 @@ import com.hout.business.dao.SuggestionDao;
 import com.hout.domain.entities.Suggestion;
 
 @Stateless
-public class SuggestionDaoImpl extends GenericDaoImpl<Suggestion, Integer> implements SuggestionDao {
+public class SuggestionDaoImpl extends GenericDaoImpl<Suggestion, Long> implements SuggestionDao {
 	@Inject
 	private EntityManager em;
 	
@@ -20,7 +20,7 @@ public class SuggestionDaoImpl extends GenericDaoImpl<Suggestion, Integer> imple
     
 	@Override
 	public boolean removeById(long id) {
-	        return super.removeById((int) id);
+	        return super.removeById(id);
 	}
 
 	@Override
