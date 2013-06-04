@@ -26,7 +26,7 @@ public class Meetup {
 	Date finalizedDate;
 
 	@XmlElement
-	boolean suggestionAllowed;
+	boolean suggestionsAllowed;
 
 	@XmlElement
 	boolean twitterSharing;
@@ -47,7 +47,7 @@ public class Meetup {
 		this.createdDate = createdDate;
 		this.finalizedDate = finalizedDate;
 		this.finalizedLocation = venue;
-		this.suggestionAllowed = isSuggestionsAllowed;
+		this.suggestionsAllowed = isSuggestionsAllowed;
 		this.facebookSharing = isFacebookSharing;
 		this.twitterSharing = isTwitterSharing;
 	}
@@ -92,12 +92,12 @@ public class Meetup {
 		this.finalizedDate = finalizedDate;
 	}
 
-	public boolean isSuggestionAllowed() {
-		return suggestionAllowed;
+	public boolean isSuggestionsAllowed() {
+		return suggestionsAllowed;
 	}
 
-	public void setSuggestionAllowed(boolean suggestionAllowed) {
-		this.suggestionAllowed = suggestionAllowed;
+	public void setSuggestionsAllowed(boolean suggestionsAllowed) {
+		this.suggestionsAllowed = suggestionsAllowed;
 	}
 
 	public boolean isTwitterSharing() {
