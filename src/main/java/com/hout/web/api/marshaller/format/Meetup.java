@@ -22,8 +22,8 @@ public class Meetup {
 	@XmlElement
 	Venue finalizedLocation;
 
-	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	@XmlElement
+	@XmlJavaTypeAdapter(JaxbDateAdapter.class)
 	Date finalizedDate;
 
 	@XmlElement
