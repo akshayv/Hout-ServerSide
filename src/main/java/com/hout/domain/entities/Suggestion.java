@@ -31,13 +31,13 @@ public class Suggestion implements Serializable {
 
     Date date;
 
-    @ElementCollection
+    @ElementCollection(fetch=FetchType.EAGER)
     Set<Long> acceptedUserIds = new HashSet<Long>();
 
-    @ElementCollection
+    @ElementCollection(fetch=FetchType.EAGER)
     Set<Long> undecidedUserIds = new HashSet<Long>();
 
-    @ElementCollection
+    @ElementCollection(fetch=FetchType.EAGER)
     Set<Long> rejectedUserIds = new HashSet<Long>();
 
     public Suggestion(long suggestedUserId, Venue venue, Date date) {
