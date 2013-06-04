@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 @XmlRootElement
 public class MeetupRetrievalResponse {
 	
@@ -40,7 +41,6 @@ public class MeetupRetrievalResponse {
 		this.meetups = meetups;
 	}
 
-	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	public Date getFromDate() {
 		return fromDate;
 	}
@@ -49,7 +49,6 @@ public class MeetupRetrievalResponse {
 		this.fromDate = fromDate;
 	}
 
-	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	public Date getToDate() {
 		return toDate;
 	}

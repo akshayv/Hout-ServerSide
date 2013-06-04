@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.hout.domain.entities.Venue;
 
+@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 @XmlRootElement
 public class Suggestion {
 
@@ -62,7 +63,6 @@ public class Suggestion {
         this.venue = venue;
     }
 
-    @XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	public Date getDate() {
         return date;
     }

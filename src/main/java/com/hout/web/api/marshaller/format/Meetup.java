@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 @XmlRootElement
 public class Meetup {
 	
@@ -67,7 +68,6 @@ public class Meetup {
 		this.description = description;
 	}
 
-	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -84,7 +84,6 @@ public class Meetup {
 		this.finalizedLocation = finalizedLocation;
 	}
 
-	@XmlJavaTypeAdapter(value=JaxbDateAdapter.class, type=Date.class)
 	public Date getFinalizedDate() {
 		return finalizedDate;
 	}
