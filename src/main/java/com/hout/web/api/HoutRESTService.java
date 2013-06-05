@@ -15,6 +15,7 @@ import com.hout.web.api.marshaller.format.HoutMeetupResponse;
 import com.hout.web.api.marshaller.format.HoutSuggestionResponse;
 import com.hout.web.api.marshaller.format.HoutUserCreationResponse;
 import com.hout.web.api.marshaller.format.HoutUserResponse;
+import com.hout.web.api.marshaller.format.Meetup;
 import com.hout.web.api.marshaller.format.MeetupRetrievalResponse;
 import com.hout.web.api.marshaller.format.MeetupSuggestionResponse;
 import com.hout.web.api.marshaller.format.NotificationResponse;
@@ -101,6 +102,13 @@ public interface HoutRESTService {
 	public MeetupRetrievalResponse getMeetupsForDateRange(@QueryParam("userId") long userId, 
 			@QueryParam("apiKey") String apiKey, @QueryParam("fromDate") String fromDate, 
 			@QueryParam("toDate")String toDate) throws Exception;
+	
+	@GET
+	@Path("/getMeetup")
+	@Produces("application/json")
+	public Meetup getMeetupDetails(@QueryParam("userId") long userId, 
+			@QueryParam("apiKey") String apiKey, @QueryParam("meetupId") Long meetupId
+			) throws Exception;
 
 	@GET
 	@Path("/findSuggestions")

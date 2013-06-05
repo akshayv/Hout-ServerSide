@@ -36,4 +36,6 @@ public interface ClientApi {
 	public List<Suggestion> getSuggestionsForMeetup(long userId, String apiKey, long meetupId) throws Exception;
 
 	public User getUserDetails(long userId);
+
+	public Meetup getMeetupDetails(long userId,	String apiKey, Long meetupId) throws Exception;
 }

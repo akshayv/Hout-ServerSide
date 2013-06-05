@@ -145,4 +145,14 @@ public class ClientApiImpl implements ClientApi {
 	public User getUserDetails(long userId) {
 		return userService.findById(userId);
 	}
+
+	@Override
+	public Meetup getMeetupDetails(long userId, String apiKey, Long meetupId) throws Exception {
+		checkApiKey(userId, apiKey);
+		Meetup meetup = meetupDao.findById(meetupId);
+		if(!meetup.getInviteeIds().contains(userId)) {
+			throw new Exception("User is not invited to meetup");
+		}
+		return meetup;
+	}
 }

@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 
 import com.hout.client.ClientApi;
@@ -312,5 +316,27 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 		}
 		
 		return new HoutUserResponse(user);
+	}
+
+	@Override
+	@GET
+	@Path("/getMeetup")
+	@Produces("application/json")
+	public Meetup getMeetupDetails(
+			@QueryParam("userId") long userId,
+			@QueryParam("apiKey") String apiKey,
+			@QueryParam("meetupId") Long meetupId) throws Exception {
+		com.hout.domain.entities.Meetup meetup;
+		try { 
+			meetup = clientApi.getMeetupDetails(userId, apiKey, meetupId);
+		} catch(Exception e) {
+			throw new HoutException(e.getMessage());
+		} 
+		Meetup returnMeetup = new Meetup(meetup.getId(), meetup.getCreatedDate(),
+		meetup.getFinalizedDate(), new Venue(meetup.getFinalizedLocation()),
+		meetup.getDescription(), meetup.getIsSuggestionsAllowed(),
+		meetup.isTwitterSharing(), meetup.isFacebookSharing());
+
+		return returnMeetup;
 	}
 }
