@@ -78,7 +78,7 @@ public class MeetupServiceImpl implements MeetupService {
 		addNew(meetup);
 		
 		for(Long contactId : contactIds ) {
-			notificationService.notify(meetup, "New meetup has been created", contactId);
+			notificationService.notify(meetup.getId(), "New meetup has been created", contactId);
 		}
 		return meetup.getId();
 	}
@@ -114,7 +114,7 @@ public class MeetupServiceImpl implements MeetupService {
 				hasBeenFinalized = true;
 				
 				for(Long userId : meetup.getInviteeIds()) {
-					notificationService.notify(meetup, "Details for meetup have been finalized", userId);
+					notificationService.notify(meetup.getId(), "Details for meetup have been finalized", userId);
 				}
 				
 				break;
@@ -189,7 +189,7 @@ public class MeetupServiceImpl implements MeetupService {
 		suggestions.add(suggestion);
 		
 		for(Long inviteeId : meetup.getInviteeIds()) {
-			notificationService.notify(new Object(), "New Suggestion for Meetup", inviteeId);
+			notificationService.notify(meetupId, "New Suggestion for Meetup", inviteeId);
 		}
 		
 		checkAndFinalizeDetails(meetupId);

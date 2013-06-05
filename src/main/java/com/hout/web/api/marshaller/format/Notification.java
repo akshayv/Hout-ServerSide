@@ -9,10 +9,24 @@ public class Notification {
 	@XmlElement
 	String notification;
 	
-	public Notification(String notification) {
+	@XmlElement
+	Long meetupId;
+	
+	public Notification(String notification, Long meetupId) {
 		this.notification = notification;
+		this.meetupId = meetupId;
 	}
 	
+	public Long getMeetupId() {
+		return meetupId;
+	}
+
+	public void setMeetupId(Long meetupId) {
+		this.meetupId = meetupId;
+	}
+
+
+
 	public void setNotification(String notification) {
 		this.notification = notification;
 	}

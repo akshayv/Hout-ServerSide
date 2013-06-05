@@ -28,6 +28,9 @@ public class Notification implements Serializable {
     @NotNull
     long userId;
     
+    @NotNull
+    long meetupId;
+    
     public Notification()  {
 
     }
@@ -51,8 +54,16 @@ public class Notification implements Serializable {
     public long getUserId() {
         return userId;
     }
+    
+    public long getMeetupId() {
+		return meetupId;
+	}
 
-    public void setUserId(long userId) {
+	public void setMeetupId(long meetupId) {
+		this.meetupId = meetupId;
+	}
+
+	public void setUserId(long userId) {
         this.userId =  userId;
     }
     

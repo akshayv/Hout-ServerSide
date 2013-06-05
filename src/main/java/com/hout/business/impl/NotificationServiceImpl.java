@@ -19,10 +19,11 @@ public class NotificationServiceImpl implements NotificationService {
 	
 
 	@Override
-	public void notify(Object o, String message, Long userId) {
+	public void notify(long meetupId, String message, Long userId) {
 		Notification notification = new Notification();
 		notification.setMessage(message);
 		notification.setUserId(userId);
+		notification.setMeetupId(meetupId);
 		notificationDao.persist(notification);
 
 	}

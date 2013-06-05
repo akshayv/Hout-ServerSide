@@ -7,7 +7,7 @@ import com.hout.domain.entities.User;
 
 public interface NotificationService {
 	
-	public void notify(Object o, String message, Long userId);
+	public void notify(long meetupId, String message, Long userId);
 
 	public List<Notification> getNewNotificationsForUser(User currentUser);
 

@@ -242,7 +242,7 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 		} 
 		NotificationResponse response = new NotificationResponse();
 		for(com.hout.domain.entities.Notification  notification : notifications) {
-			response.getNotifications().add(new Notification(notification.getMessage()));
+			response.getNotifications().add(new Notification(notification.getMessage(), notification.getMeetupId()));
 		}
 		response.setUserId(userId);
 
