@@ -1,6 +1,8 @@
 package com.hout.business.impl;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -63,5 +65,21 @@ public class SuggestionServiceImpl implements SuggestionService {
 	@Override
 	public void remove(Long id) {
 		suggestionDao.removeById(id);
+	}
+
+	@Override
+	public void removeUserSuggestions(Set<Suggestion> suggestions, long userId) {
+
+		Set<Suggestion> toBeRemoved = new HashSet<Suggestion>();
+		for(Suggestion suggestion : suggestions) {
+			if(suggestion.getSuggestedUserId() == userId) {
+				toBeRemoved.add(suggestion);
+				break;
+			}
+		}
+		
+		for(Suggestion remove : toBeRemoved) {
+			suggestions.remove(remove);
+		}
 	}	
 }

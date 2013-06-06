@@ -1,6 +1,7 @@
 package com.hout.business;
 
 import java.util.Date;
+import java.util.Set;
 
 import com.hout.domain.entities.Suggestion;
 import com.hout.domain.entities.SuggestionStatus;
@@ -13,5 +14,7 @@ public interface SuggestionService {
 	public void RSVP(User user, long suggestionId, SuggestionStatus status) throws Exception;
 	
 	public void remove(Long id);
+
+	public void removeUserSuggestions(Set<Suggestion> suggestions, long userId);
 
 }

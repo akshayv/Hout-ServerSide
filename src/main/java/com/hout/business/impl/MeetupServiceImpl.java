@@ -150,13 +150,13 @@ public class MeetupServiceImpl implements MeetupService {
 
 	@Override
 	public long addSuggestionToMeetup(long meetupId, long userId,
-			String location, Date date) throws Exception {
+			String location, Date date, boolean suggestionOverride) throws Exception {
 		Meetup meetup = meetupDao.findById(meetupId);
 		if(meetup == null) {
 		 	throw new Exception("Meetup not found. Please check the id");
 		}
 		
-		if(!meetup.getIsSuggestionsAllowed()) {
+		if(!meetup.getIsSuggestionsAllowed() && !suggestionOverride) {
 			throw new Exception("Suggestions not allowed for meetup");
 		}
 		
@@ -166,19 +166,8 @@ public class MeetupServiceImpl implements MeetupService {
 		}
 		
 		Set<Suggestion> suggestions = meetup.getSuggestions();
-		Set<Suggestion> toBeRemoved = new HashSet<Suggestion>();
-		
-		for(Suggestion suggestion : suggestions) {
-			if(suggestion.getSuggestedUserId() == userId) {
-				toBeRemoved.add(suggestion);
-				break;
-			}
-		}
-		
-		for(Suggestion remove : toBeRemoved) {
-			suggestions.remove(remove);
-		}
-		
+		suggestionService.removeUserSuggestions(suggestions, userId);
+
 		//create the actual  suggestion here
 		
 		Suggestion suggestion = suggestionService.createNew(user, location, date);

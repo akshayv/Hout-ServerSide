@@ -86,9 +86,9 @@ public class ClientApiImpl implements ClientApi {
 	}
 
 	@Override
-	public long addNewSuggestion(long userId, String apiKey, long meetupId, String suggestedPlace, Date suggestedTime) throws Exception{
+	public long addNewSuggestion(long userId, String apiKey, long meetupId, String suggestedPlace, Date suggestedTime, boolean suggestionOverride) throws Exception{
 		checkApiKey(userId, apiKey);
-		return meetupService.addSuggestionToMeetup(meetupId, userId, suggestedPlace, suggestedTime);
+		return meetupService.addSuggestionToMeetup(meetupId, userId, suggestedPlace, suggestedTime,suggestionOverride);
 	}
 
 	@Override

@@ -111,7 +111,7 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 				houtMeetupResponse.setSuggestionId(clientApi.
 						addNewSuggestion(userId, apiKey, 
 								houtMeetupResponse.getMeetupId(), 
-								suggestedLocation, date));
+								suggestedLocation, date, true));
 			} catch (Exception e) {
 				throw new HoutException(e.getMessage());
 			}
@@ -144,7 +144,7 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 
 		try {
 			long suggestionId = clientApi.addNewSuggestion(userId, apiKey, 
-					meetupId, suggestedLocation, date);
+					meetupId, suggestedLocation, date, false);
 			houtSuggestionResponse.setSuggestionId(suggestionId);
 		} catch(Exception e) {
 			throw new HoutException(e.getMessage());

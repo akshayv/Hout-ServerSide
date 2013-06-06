@@ -20,7 +20,7 @@ public interface ClientApi {
 
     public void RSVPToSuggestion(long userId, String apiKey, long meetupId, long suggestionId, SuggestionStatus status) throws Exception;
 
-    public long addNewSuggestion(long userId, String apiKey, long meetupId, String suggestedPlace, Date suggestedTime) throws Exception;
+    public long addNewSuggestion(long userId, String apiKey, long meetupId, String suggestedPlace, Date suggestedTime, boolean suggestionOverride) throws Exception;
     
     public Set<Long> addInviteesToMeetup(long userId, String apiKey, Set<Long> inviteeIds, long meetupId) throws Exception;
     

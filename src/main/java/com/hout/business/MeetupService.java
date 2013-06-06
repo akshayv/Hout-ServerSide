@@ -18,7 +18,7 @@ public interface MeetupService {
     
     public void checkAndFinalizeDetails(long meetupId) throws Exception;
     
-    public long addSuggestionToMeetup(long meetupId, long userId, String location, Date date) throws Exception;
+    public long addSuggestionToMeetup(long meetupId, long userId, String location, Date date, boolean suggestionOverride) throws Exception;
     
     public void removeUnnecessarySuggestions(long meetupId) throws Exception;
     
