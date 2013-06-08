@@ -77,7 +77,10 @@ public class MeetupServiceImpl implements MeetupService {
 		
 		addNew(meetup);
 		
-		for(Long contactId : contactIds ) {
+		Set<Long> toBeNotified = meetup.getInviteeIds();
+		toBeNotified.remove(user.getId());
+		
+		for(Long contactId : toBeNotified) {
 			notificationService.notify(meetup.getId(), "New meetup has been created", contactId);
 		}
 		return meetup.getId();
@@ -177,7 +180,10 @@ public class MeetupServiceImpl implements MeetupService {
 		
 		suggestions.add(suggestion);
 		
-		for(Long inviteeId : meetup.getInviteeIds()) {
+		Set<Long> toBeNotified = meetup.getInviteeIds();
+		toBeNotified.remove(userId);
+		
+		for(Long inviteeId : toBeNotified) {
 			notificationService.notify(meetupId, "New Suggestion for Meetup", inviteeId);
 		}
 		
