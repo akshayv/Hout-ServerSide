@@ -42,7 +42,7 @@ public interface HoutRESTService {
 
 	@GET
 	@Path("/createMeetup")
-	@Produces("application/json")
+	@Produces("application/json") 
 	public HoutMeetupResponse createMeetup(@QueryParam("userId") long userId,
 			@QueryParam("apiKey") String apiKey,
 			@QueryParam("description") String description,
