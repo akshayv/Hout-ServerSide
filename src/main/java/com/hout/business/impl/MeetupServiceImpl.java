@@ -180,7 +180,6 @@ public class MeetupServiceImpl implements MeetupService {
 		suggestions.add(suggestion);
 		
 		Set<Long> toBeNotified = meetup.getInviteeIds();
-		toBeNotified.remove(userId);
 		
 		for(Long inviteeId : toBeNotified) {
 			notificationService.notify(meetupId, "New Suggestion for Meetup", inviteeId);
