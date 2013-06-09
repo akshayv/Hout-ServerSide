@@ -78,7 +78,6 @@ public class MeetupServiceImpl implements MeetupService {
 		addNew(meetup);
 		
 		Set<Long> toBeNotified = meetup.getInviteeIds();
-		toBeNotified.remove(user.getId());
 		
 		for(Long contactId : toBeNotified) {
 			notificationService.notify(meetup.getId(), "New meetup has been created", contactId);
