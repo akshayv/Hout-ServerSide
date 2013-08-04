@@ -16,7 +16,7 @@ public interface ClientApi {
     public long createNewMeetup(long userId, String apiKey, String description, Set<Long> contactIds,
                                 boolean isFacebookSharing, boolean isTwitterSharing, boolean isSuggestionsAllowed) throws Exception;
 
-    public long createNewUser(String name, String profilePictureLocation, String apiKey, Set<Long> contacts, long contactNumber) throws Exception;
+    public long createNewUser(String name, String profilePictureLocation, String apiKey, String contactNumber) throws Exception;
 
     public void RSVPToSuggestion(long userId, String apiKey, long meetupId, long suggestionId, SuggestionStatus status) throws Exception;
 
@@ -38,4 +38,7 @@ public interface ClientApi {
 	public User getUserDetails(long userId);
 
 	public Meetup getMeetupDetails(long userId,	String apiKey, Long meetupId) throws Exception;
+
+	public List<User> getRegisteredUsers(long userId, String apiKey,
+			Set<Long> contactNumbers) throws Exception;
 }

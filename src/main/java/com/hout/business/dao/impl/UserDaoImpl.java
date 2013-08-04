@@ -1,5 +1,8 @@
 package com.hout.business.dao.impl;
 
+import java.util.List;
+import java.util.Set;
+
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -64,6 +67,18 @@ public class UserDaoImpl extends GenericDaoImpl<User, Integer> implements UserDa
 		q.setParameter("id", userId);
 		try {
 			return ((User) q.getResultList().get(0)).getApiKey();
+		} catch(Exception e) {
+			return null;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getUsersWithContactNumbers(Set<Long> contactNumbers) {
+		Query q = em.createQuery("select m from User m where m.contactNumber in :contactNumbers");
+		q.setParameter("contactNumbers", contactNumbers);
+		try {
+			return q.getResultList();
 		} catch(Exception e) {
 			return null;
 		}

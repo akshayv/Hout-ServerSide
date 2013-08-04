@@ -1,5 +1,6 @@
 package com.hout.business.impl;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.ejb.Stateless;
@@ -39,12 +40,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public User createNewUser(String name, 
     		String profilePictureLocation, String apiKey,
-			Set<Long> contacts, long contactNumber) {
+			String contactNumber) {
     	User user = new User();
 		user.setName(name);
 		user.setProfilePictureLocation(profilePictureLocation);
 		user.setApiKey(apiKey);
-		user.setContactIds(contacts);
 		user.setContactNumber(contactNumber);
 		return user;	
     }
@@ -61,5 +61,10 @@ public class UserServiceImpl implements UserService{
 			throw new Exception("Cannot find user. Please checck Id");
 		}
 		return apiKey;
+	}
+
+	@Override
+	public List<User> getRegisteredUsers(Set<Long> contactNumbers) {
+		return userDao.getUsersWithContactNumbers(contactNumbers);
 	}
 }

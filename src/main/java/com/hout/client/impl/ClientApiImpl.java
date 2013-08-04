@@ -70,9 +70,9 @@ public class ClientApiImpl implements ClientApi {
 
 	@Override
 	public long createNewUser(String name, String profilePictureLocation,
-			String apiKey, Set<Long> contacts, long contactNumber) {
+			String apiKey, String contactNumber) {
 			User user = userService.createNewUser(name, profilePictureLocation,
-					apiKey, contacts, contactNumber);
+					apiKey, contactNumber);
 			return userService.addNewUser(user);
 		}
 
@@ -154,5 +154,13 @@ public class ClientApiImpl implements ClientApi {
 			throw new Exception("User is not invited to meetup");
 		}
 		return meetup;
+	}
+
+	@Override
+	public List<User> getRegisteredUsers(long userId, String apiKey,
+			Set<Long> contactNumbers) throws Exception {
+		checkApiKey(userId, apiKey);
+		List<User> registeredUsers = userService.getRegisteredUsers(contactNumbers);
+		return registeredUsers;
 	}
 }
