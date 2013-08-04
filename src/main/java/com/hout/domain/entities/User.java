@@ -39,7 +39,7 @@ public class User implements Serializable {
     @ElementCollection
     Set<Meetup> pastMeetupIds = new HashSet<Meetup>();
 
-    long contactNumber;
+    String contactNumber;
 
     public User() {
     }
@@ -105,11 +105,11 @@ public class User implements Serializable {
         contactIds.add(contactId);
     }
 
-    public long getContactNumber() {
+    public String getContactNumber() {
         return contactNumber;
     }
 
-    public void setContactNumber(long contactNumber) {
+    public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
     }
 

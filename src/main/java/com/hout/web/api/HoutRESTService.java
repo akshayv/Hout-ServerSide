@@ -15,6 +15,7 @@ import com.hout.web.api.marshaller.format.HoutMeetupResponse;
 import com.hout.web.api.marshaller.format.HoutSuggestionResponse;
 import com.hout.web.api.marshaller.format.HoutUserCreationResponse;
 import com.hout.web.api.marshaller.format.HoutUserResponse;
+import com.hout.web.api.marshaller.format.ListUserResponse;
 import com.hout.web.api.marshaller.format.Meetup;
 import com.hout.web.api.marshaller.format.MeetupRetrievalResponse;
 import com.hout.web.api.marshaller.format.MeetupSuggestionResponse;
@@ -38,8 +39,18 @@ public interface HoutRESTService {
 			@QueryParam("name") String name,
 			@QueryParam("profilePictureLocation") String profilePictureLocation,
 			@QueryParam("apiKey") String apiKey, 
-			@QueryParam("contactNumber") long contactNumber) throws HoutException;
+			@QueryParam("contactNumber") String contactNumber) throws HoutException;
 
+	@GET
+	@Path("/getUsers")
+	@Produces("application/json")
+	public ListUserResponse getUsers(
+			@QueryParam("userId") long userId,
+			@QueryParam("apiKey") String apiKey,
+			@QueryParam("contactNumbers") Set<Long> contactNumbers) 
+					throws HoutException;
+
+	
 	@GET
 	@Path("/createMeetup")
 	@Produces("application/json") 

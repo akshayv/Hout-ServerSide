@@ -21,6 +21,7 @@ import com.hout.domain.entities.User;
 import com.hout.web.api.HoutRESTService;
 import com.hout.web.api.marshaller.format.HoutAdditionalInviteesResponse;
 import com.hout.web.api.marshaller.format.HoutException;
+import com.hout.web.api.marshaller.format.ListUserResponse;
 import com.hout.web.api.marshaller.format.HoutMeetupResponse;
 import com.hout.web.api.marshaller.format.HoutSuggestionResponse;
 import com.hout.web.api.marshaller.format.HoutUserCreationResponse;
@@ -40,7 +41,7 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 
 	public HoutUserCreationResponse createUser(String name,
 			String profilePictureLocation, 
-			String apiKey, long contactNumber) throws HoutException {
+			String apiKey, String contactNumber) throws HoutException {
 
 		if(name == null) {
 			throw new HoutException("Name not specified");
@@ -52,14 +53,13 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 			throw new HoutException("Api Key not specified");
 		}
 		
-		if(contactNumber == 0L) {
+		if(contactNumber == null) {
 			throw new HoutException("Contact Number Not specified");
 		}
 
 		HoutUserCreationResponse houtUserResponse = new HoutUserCreationResponse();
-		Set<Long> contacts = new HashSet<Long>();
 		try {
-			long userId = clientApi.createNewUser(name, profilePictureLocation, apiKey, contacts, contactNumber);
+			long userId = clientApi.createNewUser(name, profilePictureLocation, apiKey, contactNumber);
 			houtUserResponse.setUserId(userId);
 		} catch(Exception e) {
 			throw new HoutException(e.getMessage());
@@ -67,7 +67,7 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 		houtUserResponse.setStatus(Status.SUCCESS);
 		return houtUserResponse;
 	}
-
+  
 	public HoutMeetupResponse createMeetup(long userId, 
 			String apiKey, 
 			String description, 
@@ -338,5 +338,27 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 		meetup.isTwitterSharing(), meetup.isFacebookSharing());
 
 		return returnMeetup;
+	}
+
+	@Override
+	@GET
+	@Path("/getUsers")
+	@Produces("application/json")
+	public ListUserResponse getUsers(@QueryParam("userId") long userId,
+			@QueryParam("apiKey") String apiKey,
+			@QueryParam("contactNumbers") Set<Long> contactNumbers)
+			throws HoutException {
+		List<com.hout.domain.entities.User> users;
+		try { 
+			users = clientApi.getRegisteredUsers(userId, apiKey, contactNumbers);
+		} catch(Exception e) {
+			throw new HoutException(e.getMessage());
+		} 
+		
+		ListUserResponse response = new ListUserResponse();
+		for(com.hout.domain.entities.User  user : users) {
+			response.getUsers().add(new HoutUserResponse(user));
+		}
+		return response;
 	}
 }

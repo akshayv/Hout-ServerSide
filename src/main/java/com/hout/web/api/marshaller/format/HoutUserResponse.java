@@ -17,7 +17,7 @@ public class HoutUserResponse {
 	String apiKey;
 
 	@XmlElement
-	long contactNumber;
+	String contactNumber;
 
     public HoutUserResponse() {
     }
@@ -53,11 +53,11 @@ public class HoutUserResponse {
         this.apiKey = apiKey;
     }
 
-    public long getContactNumber() {
+    public String getContactNumber() {
         return contactNumber;
     }
 
-    public void setContactNumber(long contactNumber) {
+    public void setContactNumber(String contactNumber) {
         this.contactNumber = contactNumber;
     }
 
