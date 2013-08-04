@@ -357,7 +357,7 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 		
 		ListUserResponse response = new ListUserResponse();
 		for(com.hout.domain.entities.User  user : users) {
-			response.getUsers().add(new HoutUserResponse(user));
+			response.getUsers().add(new HoutUserResponse(user.getId(), user.getName(), user.getContactNumber()));
 		}
 		return response;
 	}

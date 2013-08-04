@@ -28,6 +28,13 @@ public class HoutUserResponse {
     	this.apiKey = user.getApiKey();
     	this.contactNumber = user.getContactNumber();
     }
+    
+    public HoutUserResponse(long userId, String name, String contactNumber) {
+    	this.id = userId;
+    	this.name = name;
+    	this.contactNumber = contactNumber;
+    }
+
 
     public String getName() {
         return name;
