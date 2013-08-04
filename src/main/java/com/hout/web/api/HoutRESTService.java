@@ -47,10 +47,9 @@ public interface HoutRESTService {
 	public ListUserResponse getUsers(
 			@QueryParam("userId") long userId,
 			@QueryParam("apiKey") String apiKey,
-			@QueryParam("contactNumbers") Set<Long> contactNumbers) 
+			@QueryParam("contactNumbers") Set<String> contactNumbers) 
 					throws HoutException;
 
-	
 	@GET
 	@Path("/createMeetup")
 	@Produces("application/json") 

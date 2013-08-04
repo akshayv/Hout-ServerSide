@@ -158,7 +158,7 @@ public class ClientApiImpl implements ClientApi {
 
 	@Override
 	public List<User> getRegisteredUsers(long userId, String apiKey,
-			Set<Long> contactNumbers) throws Exception {
+			Set<String> contactNumbers) throws Exception {
 		checkApiKey(userId, apiKey);
 		List<User> registeredUsers = userService.getRegisteredUsers(contactNumbers);
 		return registeredUsers;

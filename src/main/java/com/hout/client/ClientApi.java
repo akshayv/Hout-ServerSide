@@ -40,5 +40,5 @@ public interface ClientApi {
 	public Meetup getMeetupDetails(long userId,	String apiKey, Long meetupId) throws Exception;
 
 	public List<User> getRegisteredUsers(long userId, String apiKey,
-			Set<Long> contactNumbers) throws Exception;
+			Set<String> contactNumbers) throws Exception;
 }

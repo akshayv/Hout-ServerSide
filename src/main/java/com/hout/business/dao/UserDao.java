@@ -17,5 +17,5 @@ public interface UserDao extends GenericDao<User, Integer>{
 
 	public String getApiKeyForUserId(long userId);
 
-	public List<User> getUsersWithContactNumbers(Set<Long> contactNumbers);
+	public List<User> getUsersWithContactNumbers(Set<String> contactNumbers);
 }

@@ -346,7 +346,7 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 	@Produces("application/json")
 	public ListUserResponse getUsers(@QueryParam("userId") long userId,
 			@QueryParam("apiKey") String apiKey,
-			@QueryParam("contactNumbers") Set<Long> contactNumbers)
+			@QueryParam("contactNumbers") Set<String> contactNumbers)
 			throws HoutException {
 		List<com.hout.domain.entities.User> users;
 		try { 

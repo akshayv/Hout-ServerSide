@@ -74,7 +74,7 @@ public class UserDaoImpl extends GenericDaoImpl<User, Integer> implements UserDa
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> getUsersWithContactNumbers(Set<Long> contactNumbers) {
+	public List<User> getUsersWithContactNumbers(Set<String> contactNumbers) {
 		Query q = em.createQuery("select m from User m where m.contactNumber in :contactNumbers");
 		q.setParameter("contactNumbers", contactNumbers);
 		try {

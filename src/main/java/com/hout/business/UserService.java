@@ -22,5 +22,5 @@ public interface UserService {
 	
 	public String getApiKeyForUserId(long userId) throws Exception;
 
-	public List<User> getRegisteredUsers(Set<Long> contactNumbers);
+	public List<User> getRegisteredUsers(Set<String> contactNumbers);
 }

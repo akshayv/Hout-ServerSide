@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<User> getRegisteredUsers(Set<Long> contactNumbers) {
+	public List<User> getRegisteredUsers(Set<String> contactNumbers) {
 		return userDao.getUsersWithContactNumbers(contactNumbers);
 	}
 }
