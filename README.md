@@ -1,27 +1,11 @@
-Kitchensink on OpenShift
-=========================
+Hout - Server Side
 
-This is the kitchensink JBoss Quickstart app.  You can find more info @ https://docs.jboss.org/author/display/AS71/Kitchensink+quickstart
+Hout offers PaaS and allows users( through clients ) to have a democratic and intuitive approach to organizing meetups within their peer-group.
 
-Running on OpenShift
---------------------
+Each meetup has invitees, and each invitee has an option to suggest a time and a place for the meetup, and each invitee RSVPs to whichever suggestion(s)he prefers. The suggestion with the most votes is chosen as the finalized suggestion for the meetup.
 
-Create an account at http://openshift.redhat.com/
+All communications from/to clients is through the RESTful API.
 
-Create a jbossas-7 application
+Uses a MySQL implementation to  persist the data.
 
-    rhc app create -a kitchensink -t jbossas-7
 
-Add this upstream kitchensink repo
-
-    cd kitchensink
-    git remote add upstream -m master git://github.com/openshift/kitchensink-example.git
-    git pull -s recursive -X theirs upstream master
-
-Then push the repo upstream
-
-    git push
-
-That's it, you can now checkout your application at:
-
-    http://kitchensink-$namespace.rhcloud.com
