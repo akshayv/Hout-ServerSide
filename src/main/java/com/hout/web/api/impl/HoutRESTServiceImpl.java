@@ -315,6 +315,7 @@ public class HoutRESTServiceImpl implements HoutRESTService {
 			throw new HoutException("Incorrect id specified");
 		}
 		
+		
 		return new HoutUserResponse(user);
 	}
 
