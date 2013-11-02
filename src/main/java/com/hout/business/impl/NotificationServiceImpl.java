@@ -1,7 +1,6 @@
 package com.hout.business.impl;
 
-
-import java.util.List;
+import java.util.List; 
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
